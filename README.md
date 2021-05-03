@@ -1,3 +1,6 @@
+favico from [game-icons.net](https://game-icons.net/1x1/lorc/toad-teeth.html).
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
