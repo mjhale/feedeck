@@ -13,3 +13,8 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById('root')
 );
+
+window.addPlayer = (payload) => {
+  return {type: "player/add", payload};
+};
+window.store = store;

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 class Entry extends React.PureComponent {
   render() {
-    return <div>{this.props.season + 1} {this.props.day + 1} {this.props.description}</div>;
+    return <div>{this.props.season + 1} {this.props.day + 1} {this.props.description} {Date.now()}</div>;
   }
 }
 

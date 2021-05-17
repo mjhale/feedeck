@@ -1,7 +1,10 @@
 import { createStore } from 'redux';
 
 const initialState = {
-  players: [],
+  players: [
+    "94d772c7-0254-4f08-814c-f6fc58fcfb9b",
+    "c4dec95e-78a1-4840-b209-b3b597181534"
+  ],
   feed: [
   {
     "id": "744dd829-83e0-443a-8edb-936771eacdee",
@@ -1630,20 +1633,20 @@ function playerReducer(state = initialState, action) {
   switch (action.type) {
     case 'player/add':
       return {
-        players: [...state.players, action.payload.playerId],
-        ...state
+        ...state,
+        players: [...state.players, action.payload.playerId]
       };
     case 'player/remove':
       return {
+        ...state,
         players: state.players.filter((entry) => {
           return entry 
         }),
-        ...state,
       };
     case 'player/feed':
       return {
-        feed: [action.payload, ...state.feed],
-        ...state
+        ...state,
+        feed: [...action.payload, ...state.feed]
       };
     default:
       return state;
