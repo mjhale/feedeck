@@ -4,7 +4,19 @@ import { connect } from "react-redux";
 class Entry extends React.PureComponent {
   render() {
     const { season, day, description } = this.props;
-    return <div>{parseInt(season) + 1} {parseInt(day) + 1} {description}</div>;
+    return (
+      <div className="entry">
+        <div className="entrySeason">
+          s{parseInt(season) + 1}
+        </div>
+        <div className="entryDay">
+          d{parseInt(day) + 1}
+        </div>
+        <div className="entryText">
+          {description}
+        </div>
+      </div>
+    );
   }
 }
 
@@ -19,7 +31,7 @@ class CardComp extends React.Component {
     return (
       <div className="card">
         <h1>{this.playerName}</h1>
-        <ul>
+        <ul className="feedList">
           {this.props.feed.filter(f => (
             f.playerTags.includes(this.playerId) ||
             f.description.includes(this.playerName)

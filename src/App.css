@@ -18,3 +18,24 @@
   overflow-y: hidden;
   white-space: nowrap;
 }
+
+.entry {
+  display: inline-grid;
+  grid-template-columns: auto auto auto;
+  grid-column-gap: .3em;
+  align-items: center;
+}
+
+.entrySeason {
+  font-weight: 200;
+  font-size: .7em;
+}
+
+.entryDay {
+  font-weight: 200;
+  font-size: .7em;
+}
+
+.feedList {
+  padding: 0;
+}
