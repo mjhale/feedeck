@@ -3,14 +3,16 @@ import { connect } from "react-redux";
 
 class Entry extends React.PureComponent {
   render() {
-    return <div>{this.props.season + 1} {this.props.day + 1} {this.props.description} {Date.now()}</div>;
+    const { season, day, description } = this.props;
+    return <div>{parseInt(season) + 1} {parseInt(day) + 1} {description}</div>;
   }
 }
 
 class CardComp extends React.Component {
   constructor (props) {
     super(props);
-    this.playerId = this.props.playerId;
+    this.playerId = this.props.player.id;
+    this.playerName = this.props.player.name;
   }
 
   render() {
@@ -18,9 +20,10 @@ class CardComp extends React.Component {
       <div>
         <ul>
           {this.props.feed.filter(f => (
-            f.playerTags.includes(this.playerId)
+            f.playerTags.includes(this.playerId) ||
+            f.description.includes(this.playerName)
           )).map(f => (
-            <li key={f.id}><Entry season={f.season} day={f.day} description={f.description}/></li>
+            <li key={f.id} className="feedEntry"><Entry season={f.season} day={f.day} description={f.description}/></li>
           ))}
         </ul>
       </div>
