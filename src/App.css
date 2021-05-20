@@ -12,6 +12,14 @@
   display: inline-block;
 }
 
+.card button {
+  float: right;
+}
+
+.card h1 {
+  float: left;
+}
+
 .cardContainer {
   height: 100vh;
   overflow-x: auto;

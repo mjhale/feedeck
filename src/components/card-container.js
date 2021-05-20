@@ -6,7 +6,7 @@ const ContainerComp = (props) => {
   return (
     <div className="cardContainer">
       {props.players.map(p => (
-        <Card key={p.id} player={p} />
+        <Card key={p.key} player={p} />
       ))}
       <div className="card">
         <PlayerSelect />

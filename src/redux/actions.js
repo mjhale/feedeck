@@ -1,17 +1,26 @@
 import { getName } from "../api/blaseball";
 import store from "./store";
+import { v4 as uuidv4 } from "uuid";
 
-export const addPlayerByUuid = async function(uuid) {
-  var name = await getName(uuid);
-  return addPlayer(uuid, name);
+export const addPlayerByUuid = async function(id) {
+  var name = await getName(id);
+  return addPlayer(id, name);
 }
 
-export const addPlayer = function(uuid, name) {
+export const addPlayer = function(id, name) {
   return store.dispatch({
     type: "player/add",
     payload: {
-      id: uuid,
+      key: uuidv4(),
+      id: id,
       name: name
     }
   });
+}
+
+export const removeCard = function(key) {
+  return store.dispatch({
+    type: "player/remove",
+    payload: key
+  })
 }

@@ -16,7 +16,7 @@ function playerReducer(state = initialState, action) {
       return {
         ...state,
         players: state.players.filter((entry) => {
-          return entry 
+          return entry.key !== action.payload; 
         }),
       };
     case 'player/feed':

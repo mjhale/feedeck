@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { removeCard } from "../redux/actions";
 
 class Entry extends React.PureComponent {
   render() {
@@ -25,12 +26,14 @@ class CardComp extends React.Component {
     super(props);
     this.playerId = this.props.player.id;
     this.playerName = this.props.player.name;
+    this.key = this.props.player.key;
   }
 
   render() {
     return (
       <div className="card">
         <h1>{this.playerName}</h1>
+        <button onClick={() => removeCard(this.key)}>X</button>
         <ul className="feedList">
           {this.props.feed.filter(f => (
             f.playerTags.includes(this.playerId) ||
