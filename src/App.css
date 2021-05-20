@@ -2,3 +2,19 @@
   list-style-type: none;
   margin: .5em;
 }
+
+.card {
+  width: 20em;
+  height: 100vh;
+  border: 1px solid black;
+  overflow-y: scroll;
+  white-space: normal;
+  display: inline-block;
+}
+
+.cardContainer {
+  height: 100vh;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+}

@@ -17,7 +17,8 @@ class CardComp extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="card">
+        <h1>{this.playerName}</h1>
         <ul>
           {this.props.feed.filter(f => (
             f.playerTags.includes(this.playerId) ||

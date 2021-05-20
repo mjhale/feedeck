@@ -20,7 +20,6 @@ function playerReducer(state = initialState, action) {
         }),
       };
     case 'player/feed':
-      console.log(action.payload);
       return {
         ...state,
         feed: [...action.payload, ...state.feed]

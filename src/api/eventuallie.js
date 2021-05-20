@@ -145,7 +145,7 @@ const team = [
 
 export const initFeed = () => {
   const types = [...plateOutcomes, ...changes, ...team];
-  fetch(`https://api.sibr.dev/eventually/events?type=${types.toString()}&limit=1000`)
+  fetch(`https://api.sibr.dev/eventually/events?type=${types.toString()}&limit=10000`)
     .then(res => res.json())
     .then(feed => store.dispatch({type: "player/feed", payload: feed}));
 };
