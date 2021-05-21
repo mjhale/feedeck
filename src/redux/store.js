@@ -20,13 +20,27 @@ function playerReducer(state = initialState, action) {
         }),
       };
     case 'player/feed':
-      return {
-        ...state,
-        feed: [...action.payload, ...state.feed]
-      };
+      return reduceFeed(state, action.payload);
     default:
       return state;
   }
+}
+
+function reduceFeed(prevState, payload) {
+  let ids = new Set();
+  let desc = new Set();
+  for (var f of prevState.feed) {
+    ids.add(f.id);
+    desc.add(f.description);
+  }
+  return {
+    ...prevState,
+    feed: [
+      ...payload.filter((f) => !(ids.has(f.id) || desc.has(f.description))),
+      ...prevState.feed
+    ]
+  };
+
 }
 
 const store = createStore(playerReducer);

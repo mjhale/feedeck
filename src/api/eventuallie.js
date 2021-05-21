@@ -143,9 +143,27 @@ const team = [
   166, // Lineup optimized
 ];
 
+const types = [...plateOutcomes, ...changes, ...team];
+
 export const initFeed = () => {
-  const types = [...plateOutcomes, ...changes, ...team];
   fetch(`https://api.sibr.dev/eventually/events?type=${types.toString()}&limit=10000`)
     .then(res => res.json())
     .then(feed => store.dispatch({type: "player/feed", payload: feed}));
+};
+
+export const listenFeed = function(cb) {
+  let stream = new EventSource(`https://api.sibr.dev/eventually/sse`);
+  stream.addEventListener("message", (event) => {
+    const f = JSON.parse(event.data);
+    if (types.includes(f.type)) {
+      cb(JSON.parse(event.data));
+    }
+  });
+  stream.addEventListener("error", () => {
+    console.log("allyoops");
+    if (stream !== undefined) {
+      stream.close();
+    }
+    setTimeout(() => listenFeed(cb), 2000);
+  });
 };

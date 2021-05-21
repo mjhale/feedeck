@@ -4,10 +4,11 @@ import './index.css';
 import App from './App';
 import { Provider } from 'react-redux';
 import store from './redux/store';
-import { initFeed } from './api/eventuallie';
-import { addPlayer } from './redux/actions';
+import { initFeed, listenFeed } from './api/eventuallie';
+import { feedMe } from './redux/actions';
 import { getName } from './api/chronicler';
 import { listenSchedule, scheduleToFeed } from './api/blaseball';
+import { initChron } from "./api/chronicler";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -20,12 +21,8 @@ ReactDOM.render(
 initFeed();
 listenSchedule((s) => {
   const f = scheduleToFeed(s);
-  store.dispatch({
-    type: "player/feed",
-    payload: f
-  });
+  feedMe(f);
 });
+initChron();
 
-window.addPlayer = addPlayer;
-window.store = store;
-window.getName = getName;
+listenFeed((f) => feedMe(f));

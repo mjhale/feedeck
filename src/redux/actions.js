@@ -16,11 +16,18 @@ export const addPlayer = function(id, name) {
       name: name
     }
   });
-}
+};
 
 export const removeCard = function(key) {
   return store.dispatch({
     type: "player/remove",
     payload: key
   })
-}
+};
+
+export const feedMe = function(feed) {
+  return store.dispatch({
+    type: "player/feed",
+    payload: feed
+  });
+};

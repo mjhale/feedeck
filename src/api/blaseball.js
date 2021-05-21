@@ -125,7 +125,7 @@ export const scheduleToFeed = function(schedule) {
     }
     return undefined;
   }).filter(f => f !== undefined);
-}
+};
 
 export const listenSchedule = function(cb) {
   let stream = new EventSource(`https://cors-proxy.blaseball-reference.com/events/streamData`);
@@ -141,4 +141,4 @@ export const listenSchedule = function(cb) {
     }
     setTimeout(() => listenSchedule(cb), 2000);
   });
-}
+};
