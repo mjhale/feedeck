@@ -25,4 +25,4 @@ listenSchedule((s) => {
 });
 initChron();
 
-listenFeed((f) => feedMe(f));
+//listenFeed((f) => feedMe(f));
