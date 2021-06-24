@@ -4,9 +4,8 @@ import './index.css';
 import App from './App';
 import { Provider } from 'react-redux';
 import store from './redux/store';
-import { initFeed, listenFeed } from './api/eventuallie';
+import { initFeed } from './api/eventuallie';
 import { feedMe } from './redux/actions';
-import { getName } from './api/chronicler';
 import { listenSchedule, scheduleToFeed } from './api/blaseball';
 import { initChron } from "./api/chronicler";
 

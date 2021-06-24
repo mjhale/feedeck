@@ -1,24 +1,24 @@
 import { connect } from "react-redux";
+import { useState } from "react";
 import Card from "./card";
-import PlayerSelect from "./player-select";
+import FilterSelect from "./filter-select";
+
+const FilterSelectContainer = connect(state => (
+  {filterOptions: state.filterOptions}
+))(FilterSelect);
 
 const ContainerComp = (props) => {
+  const [cardInfos, setCardInfos] = useState([]);
   return (
     <div className="cardContainer">
-      {props.players.map(p => (
-        <Card key={p.key} player={p} />
+      {cardInfos.map(c => (
+        <Card key={c.name} name={c.name} filters={c.filters} removeCard={(name) => {setCardInfos(cardInfos.filter(info => (info.name !== name)))}} />
       ))}
       <div className="card">
-        <PlayerSelect />
+        <FilterSelectContainer setNewCard={(newCardInfo) => {setCardInfos([...cardInfos, newCardInfo])}} />
       </div>
     </div>
   );
 };
 
-const mapStateToProps = state => {
-  return {players: state.players};
-}
-
-const CardContainer = connect(mapStateToProps)(ContainerComp);
-
-export default CardContainer;
+export default ContainerComp;
