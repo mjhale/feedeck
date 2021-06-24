@@ -1,30 +1,3 @@
-import NodeCache from "node-cache";
-const cache = new NodeCache();
-
-export const getNames = () => {
-  var p = cache.get("names");
-  if (p !== undefined) {
-    return Promise.resolve(p);
-  }
-  return fetch(`https://cors-proxy.blaseball-reference.com/database/playerNamesIds`)
-    .then(res => res.json())
-    .then(res => {
-      cache.set("names", res, 600);
-      return res;
-    })
-}
-
-export const getName = function(uuid) {
-  return getNames().then((players) => {
-    for (let p of players) {
-      if (p.id === uuid) {
-        return p.name;
-      }
-    }
-    return "";
-  });
-}
-
 const neatPitchEvents = [
   /hits a (Single|Double|Triple|Quadruple|grand slam)/,
   /hits a (solo|2-run|3-run|4-run) home run/,
@@ -131,7 +104,9 @@ export const listenSchedule = function(cb) {
   let stream = new EventSource(`https://cors-proxy.blaseball-reference.com/events/streamData`);
   stream.addEventListener("message", (event) => {
     const sched = JSON.parse(event.data).value?.games?.schedule;
-    cb(sched);
+    if (sched) {
+      cb(sched);
+    }
   });
 
   stream.addEventListener("error", () => {

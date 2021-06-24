@@ -116,7 +116,6 @@ const changes = [
 ];
 
 const neat = [
-  ...changes,
   34, // Murder of crows
   36, // Triple Threat
   37, // Free Refill
@@ -143,7 +142,7 @@ const team = [
   166, // Lineup optimized
 ];
 
-const types = [...plateOutcomes, ...changes, ...team];
+const types = [...plateOutcomes, ...changes, ...neat, ...team];
 
 export const initFeed = () => {
   fetch(`https://api.sibr.dev/eventually/events?type=${types.toString()}&limit=10000`)

@@ -1,26 +1,19 @@
 import { createStore } from 'redux';
 
 const initialState = {
-  players: [],
+  filterOptions: [],
   feed: []
 };
 
 function playerReducer(state = initialState, action) {
   switch (action.type) {
-    case 'player/add':
-      return {
-        ...state,
-        players: [...state.players, action.payload]
-      };
-    case 'player/remove':
-      return {
-        ...state,
-        players: state.players.filter((entry) => {
-          return entry.key !== action.payload; 
-        }),
-      };
     case 'player/feed':
       return reduceFeed(state, action.payload);
+    case 'filteroptions/append':
+      return {
+        ...state,
+        filterOptions: [...state.filterOptions, ...action.payload]
+      };
     default:
       return state;
   }
