@@ -13,7 +13,7 @@ const initialState = {
     },
     {
       key: 'asdfasdf',
-      title: undefined,
+      title: '',
       playerIds: [],
       teamIds: [],
       eventTypes: []
@@ -65,6 +65,7 @@ function mainReducer(state = initialState, action) {
           }
           return {
             key: entry.key,
+            title: action.payload.title === undefined ? entry.title : action.payload.title,
             playerIds: action.payload.playerIds === undefined ? entry.playerIds : action.payload.playerIds,
             teamIds: action.payload.teamIds === undefined ? entry.teamIds : action.payload.teamIds,
             eventTypes: action.payload.eventTypes === undefined ? entry.eventTypes : action.payload.eventTypes

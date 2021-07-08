@@ -11,19 +11,25 @@ const FilterSelect = (props) => {
   }));
 
   const [expand, setExpand] = useState(props.expand || false);
-  const [selectedTeams, setSelectedTeams] = useState();
-  const [selectedPlayers, setSelectedPlayers] = useState();
 
+  console.log(defs);
   return (
     <div>
-    <h1>{defs?.title || "New Column"}</h1>
+    {expand ?
+      <input
+        type="text"
+        placeholder={defs?.title}
+        onBlur={(e) => updateColumn(props.id, {title: e.target.value})}
+      /> :
+      <h1>{defs?.title || "New Column"}</h1>
+    }
     <button onClick={() => setExpand(!expand)} >{expand ? "hide" : "edit"}</button>
     {expand && (
       <div>
       <label>Teams</label>
       <Select
         options={teamOptions}
-        defaultValue={defs?.teamIds}
+        defaultValue={defs && teamOptions.filter((t) => defs.teamIds.includes(t.value))}
         isMulti
         onChange={(opt) => {
           updateColumn(props.id, {teamIds: opt.map((o) => o.value)})
