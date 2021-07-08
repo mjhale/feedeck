@@ -1,5 +1,5 @@
 import NodeCache from "node-cache";
-import { feedMe, addFilterOptions } from "../redux/actions";
+import { feedMe, setTeamOptions, setPlayerOptions } from "../redux/actions";
 import { scheduleToFeed } from "./blaseball";
 
 const cache = new NodeCache();
@@ -23,6 +23,7 @@ export const getName = async function(uuid) {
 };
 
 export const initChron = () => {
+  /*
   fetch(`https://api.sibr.dev/chronicler/v1/games/updates?order=desc&count=1000`)
     .then(res => res.json())
     .then(res => {
@@ -30,20 +31,25 @@ export const initChron = () => {
         feedMe(scheduleToFeed([r.data]));
       }
     });
+    */
   getNames()
     .then(res => {
-      addFilterOptions(Object.entries(res).map((n) => ({value: {filters: n }, label: n[1]})))
+      setPlayerOptions(
+        Object.entries(res).map((n) => ({value: n[0], label: n[1]}))
+      );
     });
 
   fetch(`https://api.sibr.dev/chronicler/v1/teams`)
     .then(res => res.json())
     .then(res => {
-      addFilterOptions(res.data.filter(d => (
-        ilbTeamIds.indexOf(d.id) !== -1
-      )).map((d) => (
-        {value: {filters: [d.id, d.data.nickname, d.data.fullName] }, label: d.data.fullName}
-      )));
-    })
+      setTeamOptions(
+        res.data
+        .filter((d) => ilbTeamIds.indexOf(d.id) !== -1)
+        .map((d) => (
+          {value: d.id, label: d.data.fullName}
+        ))
+      );
+    });
 };
 
 // stolen from https://github.com/xSke/blaseball-player-list/blob/main/src/teams.ts thanks astrid

@@ -18,10 +18,12 @@ ReactDOM.render(
   document.getElementById('root')
 );
 initFeed();
+/*
 listenSchedule((s) => {
   const f = scheduleToFeed(s);
   feedMe(f);
 });
+*/
 initChron();
 
 //listenFeed((f) => feedMe(f));

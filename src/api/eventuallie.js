@@ -59,7 +59,7 @@ import store from "../redux/store"
 193, // Prize Match (declaring what the prize is)
  */
 
-const plateOutcomes = [
+export const plateOutcomes = [
   4, // Stolen base
   5, // Walk
   6, // Strikeout
@@ -72,7 +72,7 @@ const plateOutcomes = [
   27, // Mild pitch
 ];
 
-const changes = [
+export const changes = [
   24, // Partying
   35, // Birds free shelled player
   40, // Feedback blocked
@@ -115,7 +115,7 @@ const changes = [
   180, // Player hidden stat decrease
 ];
 
-const neat = [
+export const neat = [
   34, // Murder of crows
   36, // Triple Threat
   37, // Free Refill
@@ -129,7 +129,7 @@ const neat = [
   70, // Grind Rail
 ];
 
-const team = [
+export const team = [
   56, // Flag planted
   57, // Renovation built
   60, // Blessing won
@@ -142,7 +142,7 @@ const team = [
   166, // Lineup optimized
 ];
 
-const types = [...plateOutcomes, ...changes, ...neat, ...team];
+export const types = [...plateOutcomes, ...changes, ...neat, ...team];
 
 export const initFeed = () => {
   fetch(`https://api.sibr.dev/eventually/events?type=${types.toString()}&limit=10000`)
@@ -165,4 +165,20 @@ export const listenFeed = function(cb) {
     }
     setTimeout(() => listenFeed(cb), 2000);
   });
+};
+
+export const fetchFeed = ({playerIds, teamIds, eventTypes}) => {
+  let params = new URLSearchParams();
+  if (playerIds && playerIds.length > 0) {
+    params.append("playerTags", playerIds.join("_or_"));
+  }
+  if (teamIds && teamIds.length > 0) {
+    params.append("teamTags", teamIds.join("_or_"));
+  }
+  if (eventTypes && eventTypes.length > 0) {
+    params.append("type", playerIds.join("_or_"));
+  }
+  params.append("limit", 100);
+  return fetch(`https://api.sibr.dev/eventually/v2/events?${params.toString()}`)
+    .then(res => res.json());
 };

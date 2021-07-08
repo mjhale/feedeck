@@ -1,9 +1,12 @@
 import React from "react";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
+import { fetchFeed } from "../api/eventuallie";
+import { removeColumn, feedsMe } from "../redux/actions";
+import FilterSelect from "./filter-select";
 
 class Entry extends React.PureComponent {
   render() {
-    const { season, day, description } = this.props;
+    const { season, day, description } = this.props.data;
     return (
       <div className="entry">
         <div className="entrySeason">
@@ -20,39 +23,38 @@ class Entry extends React.PureComponent {
   }
 }
 
-class CardComp extends React.Component {
-  render() {
-    var {
-      filters,
-      name,
-      feed,
-      removeCard
-    } = this.props;
+const Entries = (props) => {
+  const { filters, id } = props;
+  const feedEntries = useSelector((state) => state.feeds[id]);
+  React.useEffect(() => {
+    fetchFeed({playerIds: filters.playerIds, teamIds: filters.teamIds, eventTypes: filters.eventTypes})
+    .then(r => {
+      feedsMe(id, r, true);
+    });
+  }, [filters]);
 
-    return (
-      <div className="card">
-        <h1>{name}</h1>
-        <button onClick={() => removeCard(name)}>X</button>
-        <ul className="feedList">
-          {feed.filter(f => {
-            return filters.filters.reduce((accumulator, currentFilter) => (
-              accumulator ||
-              f.playerTags.includes(currentFilter) ||
-              f.description.includes(currentFilter) ||
-              f.teamNames.includes(currentFilter)
-            ), false
-          )}).map(f => {
-            return <li key={f.id} className="feedEntry"><Entry season={f.season} day={f.day} description={f.description}/></li>
-          }
-          )}
-        </ul>
-      </div>
-    );
-  }
+  return (
+    <ul className="feedList">
+      {feedEntries && feedEntries.map(f => {
+        return (
+          <li key={f.id} className="feedEntry">
+            <Entry data={f} />
+          </li>
+        );
+      })}
+    </ul>
+  );
 }
 
-const mapStateToProps = state => ({feed: state.feed});
+const Card = (props) => {
+  const { filters, id } = props;
 
-const Card = connect(mapStateToProps)(CardComp);
+  return (
+    <div className="card">
+      <FilterSelect id={id} />
+      <Entries filters={filters} id={id} />
+    </div>
+  );
+}
 
 export default Card;
