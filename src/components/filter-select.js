@@ -12,7 +12,13 @@ const FilterSelect = (props) => {
 
   const [expand, setExpand] = useState(props.expand || false);
 
-  console.log(defs);
+  const checkTitle = (opt) => {
+    if (!opt || defs?.title) {
+      return undefined;
+    }
+    return opt[0].label;
+  };
+
   return (
     <div>
     {expand ?
@@ -32,7 +38,10 @@ const FilterSelect = (props) => {
         defaultValue={defs && teamOptions.filter((t) => defs.teamIds.includes(t.value))}
         isMulti
         onChange={(opt) => {
-          updateColumn(props.id, {teamIds: opt.map((o) => o.value)})
+          updateColumn(props.id, {
+            title: checkTitle(opt),
+            teamIds: opt.map((o) => o.value)
+          })
         }} 
       />
       <label>Players</label>
@@ -41,7 +50,10 @@ const FilterSelect = (props) => {
         defaultValue={defs && playerOptions.filter((p) => defs.playerIds.includes(p.value))}
         isMulti
         onChange={(opt) => {
-          updateColumn(props.id, {playerIds: opt.map((o) => o.value)})
+          updateColumn(props.id, {
+            title: checkTitle(opt),
+            playerIds: opt.map((o) => o.value)
+          })
         }}
       />
       </div>
