@@ -1,7 +1,7 @@
 import React from "react";
-import { connect, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { fetchFeed } from "../api/eventuallie";
-import { removeColumn, feedsMe } from "../redux/actions";
+import { feedsMe } from "../redux/actions";
 import FilterSelect from "./filter-select";
 
 class Entry extends React.PureComponent {

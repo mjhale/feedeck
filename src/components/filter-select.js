@@ -1,6 +1,6 @@
 import Select from "react-select";
-import { addColumn, updateColumn } from "../redux/actions";
-import { useState, useEffect } from "react";
+import { updateColumn } from "../redux/actions";
+import { useState } from "react";
 import { useSelector } from 'react-redux';
 
 const FilterSelect = (props) => {
@@ -21,6 +21,7 @@ const FilterSelect = (props) => {
 
   return (
     <div>
+    <button onClick={() => setExpand(!expand)} >{expand ? "save" : "edit"}</button>
     {expand ?
       <input
         type="text"
@@ -29,7 +30,6 @@ const FilterSelect = (props) => {
       /> :
       <h1>{defs?.title || "New Column"}</h1>
     }
-    <button onClick={() => setExpand(!expand)} >{expand ? "hide" : "edit"}</button>
     {expand && (
       <div>
       <label>Teams</label>

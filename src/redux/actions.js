@@ -1,20 +1,6 @@
 import store from "./store";
 import { v4 as uuidv4 } from "uuid";
 
-export const feedMe = function(feed) {
-  return store.dispatch({
-    type: "player/feed",
-    payload: feed
-  });
-};
-
-export const addFilterOptions = function(filterOptions) {
-  return store.dispatch({
-    type: "filteroptions/append",
-    payload: filterOptions,
-  });
-}
-
 export const addColumn = function({key, title, playerIds, teamIds, eventTypes}) {
   return store.dispatch({
     type: "columnDefs/add",

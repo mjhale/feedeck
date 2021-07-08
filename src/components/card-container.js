@@ -1,5 +1,4 @@
 import { connect } from "react-redux";
-import { useState } from "react";
 import Card from "./card";
 import FilterSelect from "./filter-select";
 

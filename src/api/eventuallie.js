@@ -1,5 +1,3 @@
-import store from "../redux/store"
-
 /*
 1, // Play ball!
 2, // Half-inning
@@ -143,12 +141,6 @@ export const team = [
 ];
 
 export const types = [...plateOutcomes, ...changes, ...neat, ...team];
-
-export const initFeed = () => {
-  fetch(`https://api.sibr.dev/eventually/events?type=${types.toString()}&limit=10000`)
-    .then(res => res.json())
-    .then(feed => store.dispatch({type: "player/feed", payload: feed}));
-};
 
 export const listenFeed = function(cb) {
   let stream = new EventSource(`https://api.sibr.dev/eventually/sse`);
