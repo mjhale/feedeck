@@ -7,9 +7,9 @@ export const addColumn = function({key, title, playerIds, teamIds, eventTypes}) 
     payload: {
       key: key || uuidv4(),
       title: title,
-      playerIds: playerIds,
-      teamIds: teamIds,
-      eventTypes: eventTypes,
+      playerIds: playerIds || [],
+      teamIds: teamIds || [],
+      eventTypes: eventTypes || [],
     }
   });
 };

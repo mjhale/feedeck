@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import Card from "./card";
-import FilterSelect from "./filter-select";
+import { addColumn } from "../redux/actions";
+import { v4 as uuidv4 } from "uuid";
 
 const ContainerComp = (props) => {
   return (
@@ -9,7 +10,7 @@ const ContainerComp = (props) => {
         <Card key={c.key} filters={c} id={c.key} />
       ))}
       <div className="card">
-        <FilterSelect expand={true}/>
+        <button onClick={() => addColumn({key: uuidv4()})}>Add Column</button>
       </div>
     </div>
   );

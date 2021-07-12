@@ -3,22 +3,7 @@ import { createStore } from 'redux';
 const initialState = {
   filterOptions: [],
   feed: [],
-  columnDefs: [
-    {
-      key: '21cbbfaa-100e-48c5-9cea-7118b0d08a34',
-      title: 'Juice Collins',
-      playerIds: ['21cbbfaa-100e-48c5-9cea-7118b0d08a34'],
-      teamIds: [],
-      eventTypes: []
-    },
-    {
-      key: 'asdfasdf',
-      title: '',
-      playerIds: [],
-      teamIds: [],
-      eventTypes: []
-    },
-  ],
+  columnDefs: [],
   lastUpdate: Date.now(),
   feeds: {},
   teamOptions: [],

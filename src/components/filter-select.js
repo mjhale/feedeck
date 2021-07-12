@@ -10,7 +10,7 @@ const FilterSelect = (props) => {
     return c.key === props.id;
   }));
 
-  const [expand, setExpand] = useState(props.expand || false);
+  const [expand, setExpand] = useState(props.expand || defs?.title === undefined ? true : false);
 
   const checkTitle = (opt) => {
     if (!opt || defs?.title) {
@@ -25,7 +25,7 @@ const FilterSelect = (props) => {
     {expand ?
       <input
         type="text"
-        placeholder={defs?.title}
+        placeholder={defs?.title || "Title"}
         onBlur={(e) => updateColumn(props.id, {title: e.target.value})}
       /> :
       <h1>{defs?.title || "New Column"}</h1>
