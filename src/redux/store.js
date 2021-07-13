@@ -1,7 +1,6 @@
 import { createStore } from 'redux';
 
 const initialState = {
-  filterOptions: [],
   feed: [],
   columnDefs: [],
   lastUpdate: Date.now(),
