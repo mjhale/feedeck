@@ -1,7 +1,63 @@
 import Select from "react-select";
 import { updateColumn, removeColumn } from "../redux/actions";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector } from 'react-redux';
+
+const TypeSelect = (props) => {
+  const { colId } = props;
+  const [ category, setCategory ] = useState(new Set());
+  useEffect(() => {
+    updateColumn(colId, {
+      categories: [...category]
+    });
+  }, [category]);
+
+  const categoryOptions = [
+    {label: "Plays", value: 0},
+    {label: "Changes", value: 1},
+    {label: "Special", value: 2},
+    {label: "Outcomes", value: 3}
+  ];
+
+  return (
+    <>
+    <label htmlFor="all">All</label>
+    <input
+      id="all"
+      type="checkbox"
+      checked={category.size === 0}
+      onChange={() => {
+        if (category.size !== 0) {
+          setCategory(new Set());
+        }
+      }}
+    />
+    {categoryOptions.map((o) => {
+      return (
+        <>
+        <label htmlFor={`cat${o.value}`}>{o.label}</label>
+        <input
+          id={`cat${o.value}`}
+          type="checkbox"
+          checked={category.has(o.value)}
+          onChange={() => {
+            if (category.has(o.value)) {
+              category.delete(o.value);
+            } else {
+              category.add(o.value);
+            }
+            if (category.size === categoryOptions.length) {
+              category.clear();
+            }
+            setCategory(new Set(category));
+          }}
+        />
+        </>
+      );
+    })}
+    </>
+  );
+};
 
 const FilterSelect = (props) => {
   const teamOptions = useSelector((state) => state.teamOptions);
@@ -82,6 +138,8 @@ const FilterSelect = (props) => {
           });
         }}
       />
+
+      <TypeSelect colId={props.id} />
       </div>
     )}
     </div>

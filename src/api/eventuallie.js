@@ -140,6 +140,13 @@ export const team = [
   166, // Lineup optimized
 ];
 
+/*
+ * 0: Plays
+ * 1: Changes
+ * 2: Special
+ * 3: Outcomes
+ */
+
 export const types = [...plateOutcomes, ...changes, ...neat, ...team];
 
 export const listenFeed = function(cb) {
@@ -159,7 +166,7 @@ export const listenFeed = function(cb) {
   });
 };
 
-export const fetchFeed = ({playerIds, teamIds, eventTypes, beings}) => {
+export const fetchFeed = ({playerIds, teamIds, eventTypes, beings, categories}) => {
   let params = new URLSearchParams();
   if (playerIds && playerIds.length > 0) {
     params.append("playerTags", playerIds.join("_or_"));
@@ -172,6 +179,9 @@ export const fetchFeed = ({playerIds, teamIds, eventTypes, beings}) => {
   }
   if (beings && beings.length > 0) {
     params.append("metadata.being", beings.join("_or_"));
+  }
+  if (categories && categories.length > 0) {
+    params.append("category", categories.join("_or_"));
   }
   params.append("limit", 100);
   return fetch(`https://api.sibr.dev/eventually/v2/events?${params.toString()}`)

@@ -47,6 +47,7 @@ function mainReducer(state = initialState, action) {
             teamIds: action.payload.teamIds === undefined ? entry.teamIds : action.payload.teamIds,
             eventTypes: action.payload.eventTypes === undefined ? entry.eventTypes : action.payload.eventTypes,
             beings: action.payload.beings === undefined ? entry.beings : action.payload.beings,
+            categories: action.payload.categories === undefined ? entry.categories : action.payload.categories
           };
         })
       };

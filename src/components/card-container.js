@@ -20,6 +20,12 @@ const toTinyColumn = (column) => {
   if (column.eventTypes) {
     tiny.e = column.eventTypes;
   }
+  if (column.beings) {
+    tiny.b = column.beings;
+  }
+  if (column.categories) {
+    tiny.c = column.categories;
+  }
   return tiny;
 };
 
@@ -28,7 +34,9 @@ const fromTinyColumn = (tiny) => {
     title: tiny.n || undefined,
     playerIds: tiny.p || [],
     teamIds: tiny.t || [],
-    eventTypes: tiny.e || []
+    eventTypes: tiny.e || [],
+    beings: tiny.b || [],
+    categories: tiny.c || []
   }
 };
 

@@ -33,7 +33,8 @@ const Entries = (props) => {
       playerIds: filters.playerIds,
       teamIds: filters.teamIds,
       eventTypes: filters.eventTypes,
-      beings: filters.beings
+      beings: filters.beings,
+      categories: filters.categories
     })
     .then(r => {
       feedsMe(id, r, true);
