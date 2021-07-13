@@ -13,7 +13,7 @@ jobs:
       - run: npm run build
         env:
           CI: false
-      #- run: echo feedeck.sibr.dev > build/CNAME
+      - run: echo feedeck.sibr.dev > build/CNAME
       - run: git --work-tree build add --all
       - run: git -c user.name=jmaliksi commit -m "Automatic deploy"
       - run: git push origin HEAD:gh-pages --force
