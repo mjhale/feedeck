@@ -1,5 +1,5 @@
 import Select from "react-select";
-import { updateColumn } from "../redux/actions";
+import { updateColumn, removeColumn } from "../redux/actions";
 import { useState } from "react";
 import { useSelector } from 'react-redux';
 
@@ -30,6 +30,11 @@ const FilterSelect = (props) => {
       /> :
       <h1>{defs?.title || "New Column"}</h1>
     }
+    {expand && (
+      <button onClick={() => removeColumn(props.id)}>
+        remove
+      </button>
+    )}
     {expand && (
       <div>
       <label>Teams</label>

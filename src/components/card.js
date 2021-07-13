@@ -26,14 +26,23 @@ class Entry extends React.PureComponent {
 const Entries = (props) => {
   const { filters, id } = props;
   const feedEntries = useSelector((state) => state.feeds[id]);
+  const [ loading, setLoading ] = React.useState(false);
   React.useEffect(() => {
+    setLoading(true);
     fetchFeed({playerIds: filters.playerIds, teamIds: filters.teamIds, eventTypes: filters.eventTypes})
     .then(r => {
       feedsMe(id, r, true);
+      setLoading(false);
     });
   }, [filters]);
 
   return (
+    <>
+    {loading && (
+      <div>
+        loading...
+      </div>
+    )}
     <ul className="feedList">
       {feedEntries && feedEntries.map(f => {
         return (
@@ -43,6 +52,7 @@ const Entries = (props) => {
         );
       })}
     </ul>
+    </>
   );
 }
 
