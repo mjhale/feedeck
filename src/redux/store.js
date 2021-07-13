@@ -45,7 +45,8 @@ function mainReducer(state = initialState, action) {
             title: action.payload.title === undefined ? entry.title : action.payload.title,
             playerIds: action.payload.playerIds === undefined ? entry.playerIds : action.payload.playerIds,
             teamIds: action.payload.teamIds === undefined ? entry.teamIds : action.payload.teamIds,
-            eventTypes: action.payload.eventTypes === undefined ? entry.eventTypes : action.payload.eventTypes
+            eventTypes: action.payload.eventTypes === undefined ? entry.eventTypes : action.payload.eventTypes,
+            beings: action.payload.beings === undefined ? entry.beings : action.payload.beings,
           };
         })
       };

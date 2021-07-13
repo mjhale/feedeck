@@ -159,7 +159,7 @@ export const listenFeed = function(cb) {
   });
 };
 
-export const fetchFeed = ({playerIds, teamIds, eventTypes}) => {
+export const fetchFeed = ({playerIds, teamIds, eventTypes, beings}) => {
   let params = new URLSearchParams();
   if (playerIds && playerIds.length > 0) {
     params.append("playerTags", playerIds.join("_or_"));
@@ -169,6 +169,9 @@ export const fetchFeed = ({playerIds, teamIds, eventTypes}) => {
   }
   if (eventTypes && eventTypes.length > 0) {
     params.append("type", playerIds.join("_or_"));
+  }
+  if (beings && beings.length > 0) {
+    params.append("metadata.being", beings.join("_or_"));
   }
   params.append("limit", 100);
   return fetch(`https://api.sibr.dev/eventually/v2/events?${params.toString()}`)

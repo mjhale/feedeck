@@ -29,7 +29,12 @@ const Entries = (props) => {
   const [ loading, setLoading ] = React.useState(false);
   React.useEffect(() => {
     setLoading(true);
-    fetchFeed({playerIds: filters.playerIds, teamIds: filters.teamIds, eventTypes: filters.eventTypes})
+    fetchFeed({
+      playerIds: filters.playerIds,
+      teamIds: filters.teamIds,
+      eventTypes: filters.eventTypes,
+      beings: filters.beings
+    })
     .then(r => {
       feedsMe(id, r, true);
       setLoading(false);

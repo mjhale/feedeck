@@ -12,6 +12,13 @@ const FilterSelect = (props) => {
 
   const [expand, setExpand] = useState(props.expand || defs?.title === undefined ? true : false);
 
+  const beingOptions = [
+    {label: "Monitor", value: 1},
+    {label: "Coin", value: 2},
+    {label: "Reader", value: 3},
+    {label: "Lootcrates", value: 5},
+  ];
+
   const checkTitle = (opt) => {
     if (!opt || defs?.title) {
       return undefined;
@@ -49,6 +56,7 @@ const FilterSelect = (props) => {
           })
         }} 
       />
+
       <label>Players</label>
       <Select
         options={playerOptions}
@@ -59,6 +67,19 @@ const FilterSelect = (props) => {
             title: checkTitle(opt),
             playerIds: opt.map((o) => o.value)
           })
+        }}
+      />
+
+      <label>Beings</label>
+      <Select
+        options={beingOptions}
+        defaultValue={defs && beingOptions.filter((b) => defs.beings.includes(b.value))}
+        isMulti
+        onChange={(opt) => {
+          updateColumn(props.id, {
+            title: checkTitle(opt),
+            beings: opt.map((o) => o.value)
+          });
         }}
       />
       </div>
