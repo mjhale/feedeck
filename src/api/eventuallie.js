@@ -1,62 +1,3 @@
-/*
-1, // Play ball!
-2, // Half-inning
-3, // Pitcher change
-11, // Game end log
-12, // Plate appearance
-13, // Strike (not including Foul Balls)
-14, // Ball
-15, // Foul Ball
-20, // Solar Panels overflow run activation
-25, // Strike zapped by Electric blood
-28, // End of inning
-29, // Site takeover text
-33, // Birds flavor text
-59, // Decree passed
-69, // Echo Chamber
-73, // Peanuts flavor text
-81, // Tarot reading
-82, // Emergency Alert
-85, // Over Under
-86, // Under Over
-88, // Undersea
-91, // Homesickness
-92, // Superyummy text
-93, // Perk
-96, // Earlbirds
-97, // Late to the Party
-106, // Added in-game modifier (Triple Threat, Free Refill, Magmatic, Inhabiting, etc)
-107, // Removed in-game modifier (same as above, but when they disappear)
-108, // Modifier expires
-142, // Postseason spot
-143, // Final standings
-144, // Wired -> Tired transitions
-146, // Added modifier due to another modifier(?) (under/over, Perk)
-147, // Removed modifier added due to another modifier(?) (under/over, Perk)
-148, // Superyummy transitions (Overperforming -> Underperforming, vice versa, may be general modifier-induced mod swaps)
-151, // Decree narration
-152, // Will results
-154, // Team shamed
-153, // Team modification blessing (S15+)
-155, // Team shames
-156, // Sun 2 grants win
-157, // Black Hole swallows
-158, // Eliminated from postseason
-159, // Postseason advance
-165, // High Pressure (The pressure is on/off, Overperforming added and removed)
-169, // Echoed player
-171, // Echo fades
-172, // Echoed modification added
-174, // Receiver becomes an echo
-175, // Alternate Coin text (hidden from Book, includes player)
-176, // The Investigation is Underway.
-178, // Midseason Middling
-181, // Entering a Crime Scene
-185, // Item breaks
-192, // Holiday Inning
-193, // Prize Match (declaring what the prize is)
- */
-
 export const plateOutcomes = [
   4, // Stolen base
   5, // Walk
@@ -149,6 +90,197 @@ export const team = [
 
 export const types = [...plateOutcomes, ...changes, ...neat, ...team];
 
+export const knownTypes = [
+  {value: 1, desc: "Play ball!"},
+  {value: 2, desc: "Half-inning"},
+  {value: 3, desc: "Pitcher change"},
+  {value: 4, desc: "Stolen base"},
+  {value: 5, desc: "Walk"},
+  {value: 6, desc: "Strikeout"},
+  {value: 7, desc: "Flyout"},
+  {value: 8, desc: "Ground out"},
+  {value: 9, desc: "Home run"},
+  {value: 10, desc: "Hit (single/double/triple)"},
+  {value: 11, desc: "Game end log"},
+  {value: 12, desc: "Plate appearance"},
+  {value: 13, desc: "Strike (not including Foul Balls)"},
+  {value: 14, desc: "Ball"},
+  {value: 15, desc: "Foul Ball"},
+  {value: 20, desc: "Solar Panels overflow run activation"},
+  {value: 21, desc: "Home Field Advantage activation"},
+  {value: 22, desc: "Hit by pitch"},
+  {value: 23, desc: "Player skipped due to being Shelled or Elsewhere"},
+  {value: 24, desc: "Partying"},
+  {value: 25, desc: "Strike zapped by Electric blood"},
+  {value: 26, desc: "Weather change"},
+  {value: 27, desc: "Mild pitch"},
+  {value: 28, desc: "End of inning"},
+  {value: 29, desc: "Site takeover text"},
+  {value: 30, desc: "Black hole (in-game)"},
+  {value: 31, desc: "Sun 2 (in-game)"},
+  {value: 33, desc: "Birds flavor text"},
+  {value: 34, desc: "Murder of crows"},
+  {value: 35, desc: "Birds free shelled player"},
+  {value: 36, desc: "Triple Threat"},
+  {value: 37, desc: "Free Refill"},
+  {value: 39, desc: "Wired"},
+  {value: 40, desc: "Feedback blocked"},
+  {value: 41, desc: "Feedback"},
+  {value: 45, desc: "Peanuts: Superallergic reaction"},
+  {value: 47, desc: "Allergic reaction"},
+  {value: 48, desc: "Reverberating"},
+  {value: 49, desc: "Reverb shuffle"},
+  {value: 51, desc: "Blooddrain"},
+  {value: 52, desc: "Siphon"},
+  {value: 53, desc: "Blooddrain: transfusion (either normal/Siphon) blocked by Sealant"},
+  {value: 54, desc: "Incineration"},
+  {value: 55, desc: "Fire eating"},
+  {value: 56, desc: "Flag planted"},
+  {value: 57, desc: "Renovation built"},
+  {value: 58, desc: "Light switch is now OFF/ON"},
+  {value: 59, desc: "Decree passed"},
+  {value: 60, desc: "Blessing won"},
+  {value: 61, desc: "Will received"},
+  {value: 62, desc: "Flood"},
+  {value: 63, desc: "Salmon swim upstream"},
+  {value: 64, desc: "Polarity: polarity shift"},
+  {value: 65, desc: "Entering the Secret Base"},
+  {value: 66, desc: "Exiting the Secret Base"},
+  {value: 67, desc: "Consumers attack"},
+  {value: 69, desc: "Echo Chamber"},
+  {value: 70, desc: "Grind Rail"},
+  {value: 71, desc: "Tunnels used"},
+  {value: 72, desc: "Peanut Mister"},
+  {value: 73, desc: "Peanuts flavor text"},
+  {value: 74, desc: "Tasting the infinite (Shelling)"},
+  {value: 76, desc: "Event Horizon activates"},
+  {value: 77, desc: "Event Horizon awaits"},
+  {value: 78, desc: "Solar Panels start-up text"},
+  {value: 79, desc: "Solar Panels overflow run collection"},
+  {value: 81, desc: "Tarot reading"},
+  {value: 82, desc: "Emergency Alert"},
+  {value: 84, desc: "Return from Elsewhere"},
+  {value: 85, desc: "Over Under"},
+  {value: 86, desc: "Under Over"},
+  {value: 88, desc: "Undersea"},
+  {value: 91, desc: "Homesickness"},
+  {value: 92, desc: "Superyummy text"},
+  {value: 93, desc: "Perk"},
+  {value: 96, desc: "Earlbirds"},
+  {value: 97, desc: "Late to the Party"},
+  {value: 99, desc: "Shame donor"},
+  {value: 106, desc: "Added in-game modifier"},
+  {value: 107, desc: "Removed in-game modifier"},
+  {value: 108, desc: "Modifier expires"},
+  {value: 109, desc: "Player recruited (including Postseason Births)"},
+  {value: 110, desc: "Player sent to shadows and replaced (necromancy)"},
+  {value: 111, desc: "Player removed and replaced from shadows (Returned)"},
+  {value: 112, desc: "ECHO STATIC player removed from team"},
+  {value: 113, desc: "Player trade"},
+  {value: 114, desc: "Player changing position"},
+  {value: 115, desc: "Player joining team"},
+  {value: 116, desc: "New player after incineration"},
+  {value: 117, desc: "Player stat increase"},
+  {value: 118, desc: "Player stat decrease"},
+  {value: 119, desc: "Player reroll"},
+  {value: 122, desc: "Stat change from superallergic reaction"},
+  {value: 124, desc: "Failed player move due to Force"},
+  {value: 125, desc: "Player enters the Hall of Flame"},
+  {value: 126, desc: "Player exits the Hall of Flame"},
+  {value: 127, desc: "Player gained item"},
+  {value: 128, desc: "Player lost item"},
+  {value: 130, desc: "Reverb shuffle (full)"},
+  {value: 131, desc: "Reverb shuffle (lineup)"},
+  {value: 132, desc: "Reverb shuffle (rotation)"},
+  {value: 133, desc: "Team incineration replacement"},
+  {value: 135, desc: "New team"},
+  {value: 136, desc: "New player (excluding incinerations)"},
+  {value: 137, desc: "Player hatched"},
+  {value: 138, desc: "Team joins the league"},
+  {value: 139, desc: "Player Evolves"},
+  {value: 141, desc: "Team wins Internet Series"},
+  {value: 142, desc: "Postseason spot"},
+  {value: 143, desc: "Final standings"},
+  {value: 144, desc: "Wired -> Tired transitions"},
+  {value: 145, desc: "Player becomes an Alternate"},
+  {value: 146, desc: "Added modifier due to another modifier(?) (under/over, Perk)"},
+  {value: 147, desc: "Removed modifier added due to another modifier(?) (under/over, Perk)"},
+  {value: 148, desc: "Superyummy transitions"},
+  {value: 149, desc: "Necromancy narration"},
+  {value: 150, desc: "Returned player is permitted to stay"},
+  {value: 151, desc: "Decree narration"},
+  {value: 152, desc: "Will results"},
+  {value: 153, desc: "Team stat adjustments (S15+)"},
+  {value: 154, desc: "Team shamed"},
+  {value: 155, desc: "Team shames another"},
+  {value: 156, desc: "Sun 2 grants win"},
+  {value: 157, desc: "Black Hole swallows"},
+  {value: 158, desc: "Eliminated from postseason"},
+  {value: 159, desc: "Postseason advance"},
+  {value: 161, desc: "Player gained blood type"},
+  {value: 165, desc: "High Pressure"},
+  {value: 166, desc: "Lineup optimized"},
+  {value: 168, desc: "Peanut allergy cured (Nut Button)"},
+  {value: 169, desc: "Echoed player"},
+  {value: 170, desc: "Echo player becomes Static"},
+  {value: 171, desc: "Echo fades"},
+  {value: 172, desc: "Echoed modification added"},
+  {value: 173, desc: "PsychoAcoustics"},
+  {value: 174, desc: "Receiver becomes an echo"},
+  {value: 175, desc: "Alternate Coin text (hidden from Book, includes player)"},
+  {value: 176, desc: "The Investigation is Underway."},
+  {value: 177, desc: "Glitter: Crate drop"},
+  {value: 178, desc: "Midseason Middling"},
+  {value: 179, desc: "Player hidden stat increase"},
+  {value: 180, desc: "Player hidden stat decrease"},
+  {value: 181, desc: "Entering a Crime Scene"},
+  {value: 182, desc: "Ambitious"},
+  {value: 183, desc: "Unambitious"},
+  {value: 184, desc: "Coasting"},
+  {value: 185, desc: "Item breaks"},
+  {value: 186, desc: "Item damaged"},
+  {value: 187, desc: "Broken item repaired"},
+  {value: 188, desc: "Damaged item repaired"},
+  {value: 189, desc: "Community Chest opens"},
+  {value: 190, desc: "No free item slot"},
+  {value: 191, desc: "Fax Machine activation"},
+  {value: 192, desc: "Holiday Inning"},
+  {value: 193, desc: "Prize Match (declaring what the prize is)"},
+  {value: 194, desc: "Team received gifts"},
+  {value: 195, desc: "Smithy activation"},
+  {value: 196, desc: "Player enters vault"},
+  {value: 198, desc: "A Blood type"},
+  {value: 199, desc: "Player soul increase"},
+  {value: 201, desc: "Narrative being actions"},
+  {value: 202, desc: "Library: Pre-season message"},
+  {value: 203, desc: "Ballpark mod Ratified into Non-Physical Law"},
+  {value: 204, desc: "SMASH"},
+  {value: 206, desc: "Hype built in ballpark"},
+  {value: 208, desc: "Practicing Moderation"},
+  {value: 209, desc: "Runs scored"},
+  {value: 210, desc: "League modification added"},
+  {value: 213, desc: "Ballons inflated from win"},
+  {value: 214, desc: "Win collected (Regular Season, S20+)"},
+  {value: 215, desc: "Win collected (Postseason, S20+)"},
+  {value: 216, desc: "Game over"},
+  {value: 217, desc: "Sun(Sun) pressure change"},
+  {value: 218, desc: "Tunnel used, nothing found"},
+  {value: 219, desc: "Tunnel used, fled elsewhere"},
+  {value: 220, desc: "Tunnel used - stole item"},
+  {value: 223, desc: "Weather event"},
+  {value: 224, desc: "Element added to item"},
+  {value: 226, desc: "Sun 30 smiles"},
+  {value: 228, desc: "Voicemail activation"},
+  {value: 230, desc: "Phantom Thieves Guild steals item"},
+  {value: 231, desc: "Phantom Thieves Guild steals player"},
+  {value: 232, desc: "[TUMBLEWEED SOUNDS]"},
+  {value: 233, desc: "Trader/traitor"},
+  {value: 234, desc: "Trade failed"},
+  {value: 236, desc: "Item traded"},
+  {value: 238, desc: "[REDACTED] - snack payouts? (Library only)"},
+  {value: 241, desc: "Vault revealed"},
+];
+
 export const listenFeed = function(cb) {
   let stream = new EventSource(`https://api.sibr.dev/eventually/sse`);
   stream.addEventListener("message", (event) => {
@@ -175,7 +307,7 @@ export const fetchFeed = ({playerIds, teamIds, eventTypes, beings, categories}) 
     params.append("teamTags", teamIds.join("_or_"));
   }
   if (eventTypes && eventTypes.length > 0) {
-    params.append("type", playerIds.join("_or_"));
+    params.append("type", eventTypes.join("_or_"));
   }
   if (beings && beings.length > 0) {
     params.append("metadata.being", beings.join("_or_"));

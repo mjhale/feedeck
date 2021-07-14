@@ -40,7 +40,7 @@ const Entries = (props) => {
       feedsMe(id, r, true);
       setLoading(false);
     });
-  }, [filters]);
+  }, [filters, id]);
 
   return (
     <>
