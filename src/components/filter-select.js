@@ -142,7 +142,7 @@ const FilterSelect = (props) => {
 
   return (
     <div>
-    {!expand && (<button onClick={() => setExpand(true)}>edit</button>)}
+    {!expand && (<button onClick={() => setExpand(true)} className="editButton">edit</button>)}
     {expand && <div>
       {removeConfirm ? (
         <>

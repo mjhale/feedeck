@@ -26,6 +26,7 @@
 }
 
 .card h1 {
+  margin-top: 0;
 }
 
 .cardContainer {
@@ -57,6 +58,7 @@
 }
 
 .typeCheckbox {
+  font-size: small;
 }
 
 .typeModal {
@@ -99,6 +101,10 @@
 }
 
 .removeButton {
+  float: right;
+}
+
+.editButton {
   float: right;
 }
 
