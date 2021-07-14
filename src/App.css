@@ -6,7 +6,9 @@
 .card {
   width: 100vw;
   height: 100vh;
-  border: 1px solid black;
+  border-width: 0 1px;
+  border-style: solid;
+  border-color: black;
   overflow-y: scroll;
   white-space: normal;
   display: inline-block;
@@ -15,6 +17,8 @@
 @media (min-width: 30em) {
   .card {
     width: 22em;
+    margin: 0 1px 0 1px;
+    padding: 8px;
   }
 }
 
@@ -63,6 +67,10 @@
   columns: 2;
 }
 
+.categoryOption input {
+  margin-left: 0;
+}
+
 .selectedTypeCrumb {
   font-size: x-small;
   max-width: 10em;
@@ -76,4 +84,28 @@
 .selectedTypes {
   display: flex;
   flex-wrap: wrap;
+}
+
+.titleEdit {
+  font-size: x-large;
+}
+
+.editButtons {
+}
+
+.editButtons > button {
+  margin-top: .5em;
+  font-size: medium;
+}
+
+.removeButton {
+  float: right;
+}
+
+.editPanel > * {
+  margin: 4px 0;
+}
+
+.editPanel > label {
+  font-size: small;
 }

@@ -66,7 +66,7 @@ const TypeSelect = (props) => {
   return (
     <div>
       <div className="categorySelect">
-        <div>
+        <div className="categoryOption">
           <input
             id="cat_all"
             type="checkbox"
@@ -81,7 +81,7 @@ const TypeSelect = (props) => {
         </div>
         {categoryOptions.map((o) => {
           return (
-            <div key={o.value}>
+            <div key={o.value} className="categoryOption">
               <input
                 id={`cat${o.value}`}
                 type="checkbox"
@@ -124,6 +124,7 @@ const FilterSelect = (props) => {
   }));
 
   const [expand, setExpand] = useState(props.expand || defs?.title === undefined ? true : false);
+  const [removeConfirm, setRemoveConfirm] = useState(false)
 
   const beingOptions = [
     {label: "Monitor", value: 1},
@@ -141,62 +142,72 @@ const FilterSelect = (props) => {
 
   return (
     <div>
-    <button onClick={() => setExpand(!expand)} >{expand ? "save" : "edit"}</button>
+    {!expand && (<button onClick={() => setExpand(true)}>edit</button>)}
+    {expand && <div>
+      {removeConfirm ? (
+        <>
+        <button onClick={() => setRemoveConfirm(false)} className="removeButton">no</button>
+        <button onClick={() => removeColumn(props.id)} className="removeButton">yes</button>
+        <label className="removeButton">{"Remove column?"}</label>
+        </>
+      ) : (
+        <button onClick={() => setRemoveConfirm(true)} className="removeButton">x</button>
+      )}
+    </div>}
     {expand ?
       <input
         type="text"
         placeholder={defs?.title || "Title"}
         onBlur={(e) => updateColumn(props.id, {title: e.target.value})}
+        className="titleEdit"
       /> :
       <h1>{defs?.title || "New Column"}</h1>
     }
     {expand && (
-      <button onClick={() => removeColumn(props.id)}>
-        remove
-      </button>
-    )}
-    {expand && (
-      <div>
-      <TypeSelect colId={props.id} defs={defs} />
+      <div className="editPanel">
+        <TypeSelect colId={props.id} defs={defs} />
 
-      <label>Teams</label>
-      <Select
-        options={teamOptions}
-        defaultValue={defs && teamOptions.filter((t) => defs.teamIds.includes(t.value))}
-        isMulti
-        onChange={(opt) => {
-          updateColumn(props.id, {
-            title: checkTitle(opt),
-            teamIds: opt.map((o) => o.value)
-          })
-        }} 
-      />
+        <label>Teams</label>
+        <Select
+          options={teamOptions}
+          defaultValue={defs && teamOptions.filter((t) => defs.teamIds.includes(t.value))}
+          isMulti
+          onChange={(opt) => {
+            updateColumn(props.id, {
+              title: checkTitle(opt),
+              teamIds: opt.map((o) => o.value)
+            })
+          }} 
+        />
 
-      <label>Players</label>
-      <Select
-        options={playerOptions}
-        defaultValue={defs && playerOptions.filter((p) => defs.playerIds.includes(p.value))}
-        isMulti
-        onChange={(opt) => {
-          updateColumn(props.id, {
-            title: checkTitle(opt),
-            playerIds: opt.map((o) => o.value)
-          })
-        }}
-      />
+        <label>Players</label>
+        <Select
+          options={playerOptions}
+          defaultValue={defs && playerOptions.filter((p) => defs.playerIds.includes(p.value))}
+          isMulti
+          onChange={(opt) => {
+            updateColumn(props.id, {
+              title: checkTitle(opt),
+              playerIds: opt.map((o) => o.value)
+            })
+          }}
+        />
 
-      <label>Beings</label>
-      <Select
-        options={beingOptions}
-        defaultValue={defs && beingOptions.filter((b) => defs.beings.includes(b.value))}
-        isMulti
-        onChange={(opt) => {
-          updateColumn(props.id, {
-            title: checkTitle(opt),
-            beings: opt.map((o) => o.value)
-          });
-        }}
-      />
+        <label>Beings</label>
+        <Select
+          options={beingOptions}
+          defaultValue={defs && beingOptions.filter((b) => defs.beings.includes(b.value))}
+          isMulti
+          onChange={(opt) => {
+            updateColumn(props.id, {
+              title: checkTitle(opt),
+              beings: opt.map((o) => o.value)
+            });
+          }}
+        />
+        <div className="editButtons">
+          <button onClick={() => setExpand(false)}>save</button>
+        </div>
       </div>
     )}
     </div>
