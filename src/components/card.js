@@ -3,10 +3,31 @@ import { useSelector } from "react-redux";
 import { fetchFeed } from "../api/eventuallie";
 import { feedsMe } from "../redux/actions";
 import FilterSelect from "./filter-select";
+import ballclark from "../ballclark.png";
 
 class Entry extends React.PureComponent {
   render() {
-    const { season, day, description } = this.props.data;
+    const { season, day, description, metadata } = this.props.data;
+    let entryText = "entryText";
+    switch (metadata?.being) {
+      case -1:
+        entryText += " bigdeal";
+        break;
+      case 1:
+        entryText += " monitor";
+        break;
+      case 2:
+        entryText += " boss";
+        break;
+      case 3:
+        entryText += " reader";
+        break;
+      case 5:
+        entryText += " lootcrates";
+        break;
+      default:
+        break;
+    }
     return (
       <div className="entry">
         <div className="entrySeason">
@@ -15,13 +36,48 @@ class Entry extends React.PureComponent {
         <div className="entryDay">
           d{parseInt(day) + 1}
         </div>
-        <div className="entryText">
+        <div className={entryText}>
           {description}
         </div>
       </div>
     );
   }
-}
+};
+
+const EntryCluster = ({ feedEntries }) => {
+  const clustered = feedEntries.reduce((acc, f) => {
+    let last = acc.pop();
+    if (last.length === 0) {
+      last.push(f);
+      acc.push(last);
+      return acc;
+    }
+    if (last[0].season === f.season && last[0].day === f.day && last[0].phase === f.phase) {
+      last.push(f);
+      acc.push(last)
+      return acc;
+    }
+    acc.push(last);
+    acc.push([]);
+    return acc;
+  }, [[]]);
+
+  return (
+    <ul className="feedCluster">
+      {clustered.map(c => (c.length > 0 &&
+        <li key={c[0].season + c[0].day + c[0].phase} className="feedCluster">
+          <ul className="feedList">
+            {c.map(e => (
+              <li key={e.id} className="feedEntry">
+                <Entry data={e} />
+              </li>
+            ))}
+          </ul>
+        </li>
+      ))}
+    </ul>
+  );
+};
 
 const Entries = (props) => {
   const { filters, id } = props;
@@ -46,9 +102,15 @@ const Entries = (props) => {
     <>
     {loading && (
       <div>
-        loading...
+        <center>
+          <div className="spinClark">
+            <img src={ballclark}/>
+          </div>
+        </center>
       </div>
     )}
+    {feedEntries && <EntryCluster feedEntries={feedEntries} />}
+    {/*
     <ul className="feedList">
       {feedEntries && feedEntries.map(f => {
         return (
@@ -58,9 +120,10 @@ const Entries = (props) => {
         );
       })}
     </ul>
+    */}
     </>
   );
-}
+};
 
 const Card = (props) => {
   const { filters, id } = props;

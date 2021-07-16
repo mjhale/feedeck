@@ -127,6 +127,7 @@ const FilterSelect = (props) => {
   const [removeConfirm, setRemoveConfirm] = useState(false)
 
   const beingOptions = [
+    {label: "Big Deal", value: -1},
     {label: "Monitor", value: 1},
     {label: "Coin", value: 2},
     {label: "Reader", value: 3},
@@ -138,6 +139,17 @@ const FilterSelect = (props) => {
       return undefined;
     }
     return opt[0].label;
+  };
+
+  const selectStyle = {
+    option: (styles, state) => ({
+      ...styles,
+      cursor: "pointer",
+    }),
+    control: (styles) => ({
+      ...styles,
+      cursor: "pointer",
+    }),
   };
 
   return (
@@ -162,6 +174,7 @@ const FilterSelect = (props) => {
 
         <label>Teams</label>
         <Select
+          styles={selectStyle}
           options={teamOptions}
           defaultValue={defs && teamOptions.filter((t) => defs.teamIds?.includes(t.value))}
           isMulti
@@ -175,6 +188,7 @@ const FilterSelect = (props) => {
 
         <label>Players</label>
         <Select
+          styles={selectStyle}
           options={playerOptions}
           defaultValue={defs && playerOptions.filter((p) => defs.playerIds?.includes(p.value))}
           isMulti
@@ -188,6 +202,7 @@ const FilterSelect = (props) => {
 
         <label>Beings</label>
         <Select
+          styles={selectStyle}
           options={beingOptions}
           defaultValue={defs && beingOptions.filter((b) => defs.beings?.includes(b.value))}
           isMulti

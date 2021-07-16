@@ -1,6 +1,24 @@
+:root {
+  --bg-color: #FFF;
+  --primary-color: #000;
+  --secondary-color: #DDD;
+  --tertiary-color: #EEE;
+  --font-color: #000;
+
+  background: var(--bg-color);
+  color: var(--font-color);
+}
+
 .feedEntry {
   list-style-type: none;
-  margin: .5em;
+  margin: .15em 0;
+  background: var(--tertiary-color);
+  padding: .3em .2em;
+}
+
+.feedCluster {
+  list-style-type: none;
+  padding: 0;
 }
 
 .card {
@@ -25,8 +43,32 @@
 .card button {
 }
 
+button {
+  border-radius: 25px;
+  cursor: pointer;
+  border: 1px solid var(--primary-color);
+  font-family: "Open Sans","Helvetica Neue",sans-serif;
+  font-weight: 700;
+  background: var(--bg-color);
+  color: var(--font-color);
+  margin: .2em;
+  padding: .2em .5em;
+  vertical-align: middle;
+}
+
+button:hover {
+  color: var(--bg-color);
+  background: var(--font-color);
+}
+
+input[type=checkbox] {
+  cursor: pointer;
+}
+
 .card h1 {
   margin-top: 0;
+  font-family: "Lora";
+  color: var(--font-color);
 }
 
 .cardContainer {
@@ -64,8 +106,15 @@
   font-size: .7em;
 }
 
+.entryText {
+  font-family: "Lora";
+}
+
 .feedList {
   padding: 0;
+  background: var(--secondary-color);
+  margin: .4em 0;
+  padding: .1em;
 }
 
 .typeCheckbox {
@@ -121,4 +170,62 @@
 
 .editPanel > label {
   font-size: small;
+}
+
+.spinClark {
+  width: 2em;
+  height: 2em;
+  /*background-image: url("./ballclark.png");*/
+  animation: spinny 3s linear infinite;
+  -webkit-animation: spinny 3s linear infinite;
+  -moz-animation: spinny 3s linear infinite;
+  -o-animation: spinny 3s linear infinite;
+  -ms-animation: spinny 3s linear infinite;
+}
+
+.spinClark>img {
+  width: 100%;
+  height: 100%;
+  animation: fadeIn 1s;
+  -webkit-animation: fadeIn 1s;
+  -moz-animation: fadeIn 1s;
+  -o-animation: fadeIn 1s;
+  -ms-animation: fadeIn 1s;
+
+}
+
+@keyframes spinny {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.monitor {
+  color: #5988FF;
+  text-shadow: 0 0 20px;
+  font-weight: 700;
+}
+
+.reader {
+  color: #A16DC3;
+  text-shadow: 0 0 10px;
+}
+
+.boss {
+  color: #FFBE00;
+  font-weight: 700;
+}
+
+.lootcrates {
+  font-style: italic;
+  color: #b3b3b3;
+  font-weight: 700;
+}
+
+.bigdeal {
+  font-weight: 700;
+  color: var(--font-color);
 }
