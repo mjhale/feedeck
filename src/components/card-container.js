@@ -58,6 +58,7 @@ const CardContainer = (props) => {
 
   useEffect(() => {
     codec("lzma").compress(columns.map(toTinyColumn)).then((s) => history.push(`/${s}`));
+    setShareLink(undefined);
   }, [columns]);
 
   const toastLink = (link) => {
@@ -89,11 +90,23 @@ const CardContainer = (props) => {
               'Content-Type': 'application/x-www-form-urlencoded'
             }
           })
-          .then((r) => r.text())
+          .then((r) => {
+            if (r.status !== 200) {
+              throw new Error("oh no");
+            }
+            return r.text();
+          })
           .then((tinyHash) => {
             const link = `${window.location.origin}/monch#${tinyHash}`;
             setShareLink(link);
             toastLink(link);
+          })
+          .catch(() => {
+            setShareLink(undefined);
+            toast("oh no something went wrong", {
+              hideProgressBar: true,
+              draggable: false
+            });
           })
         }}>Share</button>
       </div>
