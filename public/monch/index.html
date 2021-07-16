@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script>
+      const tiny = window.location.hash;
+      fetch(`https://tiny.sibr.dev/lookup/${tiny.slice(1)}`)
+      .then((r) => {
+        if (r.status === 200) {
+          r.text().then(t => window.location.replace(`${window.location.origin}/#${t.split('#')[1]}`));
+        } else {
+          window.setTimeout(() => window.location.replace(`${window.location.origin}`), 3000);
+        }
+      });
+    </script>
+  </head>
+  <body>
+    uh<br/>
+    looking for a snack<br/>
+    hungry</br>
+    maybe try back <a href="/">home</a>
+  </body>
+</html>

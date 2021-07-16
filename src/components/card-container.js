@@ -2,9 +2,10 @@ import { useSelector } from "react-redux";
 import Card from "./card";
 import { addColumn } from "../redux/actions";
 import { v4 as uuidv4 } from "uuid";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import codec from "json-url";
+import { toast } from 'react-toastify';
 
 const toTinyColumn = (column) => {
   let tiny = {};
@@ -44,8 +45,10 @@ const CardContainer = (props) => {
   const columns = useSelector((state) => state.columnDefs);
   const history = useHistory();
 
+  const [shareLink, setShareLink] = useState();
+  const hash = props.match?.params.hash;
+
   useEffect(() => {
-    const hash = props.match?.params.hash;
     if (hash) {
       codec("lzma").decompress(hash).then((json) => json.map((j) => addColumn(fromTinyColumn(j))));
     } else {
@@ -57,6 +60,16 @@ const CardContainer = (props) => {
     codec("lzma").compress(columns.map(toTinyColumn)).then((s) => history.push(`/${s}`));
   }, [columns]);
 
+  const toastLink = (link) => {
+    navigator.clipboard.writeText(link);
+    toast(`Link copied!\n${link}`, {
+      autoClose: 4000,
+      hideProgressBar: true,
+      pauseOnHover: false,
+      draggable: false,
+    });
+  };
+
   return (
     <div className="cardContainer">
       {columns.map(c => (
@@ -64,6 +77,25 @@ const CardContainer = (props) => {
       ))}
       <div className="card">
         <button onClick={() => addColumn({key: uuidv4()})}>Add Column</button>
+        <button onClick={() => {
+          if (shareLink) {
+            toastLink(shareLink);
+            return;
+          }
+          fetch('https://tiny.sibr.dev/submit', {
+            method: 'POST',
+            body: `url=https://feedeck.sibr.dev/#/${hash}`,
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            }
+          })
+          .then((r) => r.text())
+          .then((tinyHash) => {
+            const link = `${window.location.origin}/monch#${tinyHash}`;
+            setShareLink(link);
+            toastLink(link);
+          })
+        }}>Share</button>
       </div>
     </div>
   );
