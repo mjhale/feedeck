@@ -8,8 +8,11 @@
         if (r.status === 200) {
           r.text().then(t => window.location.replace(`${window.location.origin}/#${t.split('#')[1]}`));
         } else {
-          window.setTimeout(() => window.location.replace(`${window.location.origin}`), 3000);
+          throw new Error('uh oh');
         }
+      })
+      .catch(() => {
+        window.setTimeout(() => window.location.replace(`${window.location.origin}`), 3000);
       });
     </script>
   </head>
