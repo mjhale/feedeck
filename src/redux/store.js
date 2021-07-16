@@ -4,6 +4,7 @@ const initialState = {
   feed: [],
   columnDefs: [],
   lastUpdate: Date.now(),
+  autoRefresh: false,
   feeds: {},
   teamOptions: [],
   playerOptions: []
@@ -11,6 +12,11 @@ const initialState = {
 
 function mainReducer(state = initialState, action) {
   switch (action.type) {
+    case 'autoRefresh/toggle':
+      return {
+        ...state,
+        autoRefresh: !state.autoRefresh
+      };
     case 'setOptions/teams':
       return {
         ...state,
@@ -20,6 +26,11 @@ function mainReducer(state = initialState, action) {
       return {
         ...state,
         playerOptions: action.payload
+      };
+    case 'columnDefs/set':
+      return {
+        ...state,
+        columnDefs: [...action.payload]
       };
     case 'columnDefs/add':
       return {
@@ -67,6 +78,11 @@ function mainReducer(state = initialState, action) {
         ...prev
       ];
       return copy;
+    case 'lastUpdate/set':
+      return {
+        ...state,
+        lastUpdate: action.payload
+      };
     default:
       return state;
   }

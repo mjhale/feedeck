@@ -142,18 +142,11 @@ const FilterSelect = (props) => {
 
   return (
     <div>
-    {!expand && (<button onClick={() => setExpand(true)} className="editButton">edit</button>)}
-    {expand && <div>
-      {removeConfirm ? (
-        <>
-        <button onClick={() => setRemoveConfirm(false)} className="removeButton">no</button>
-        <button onClick={() => removeColumn(props.id)} className="removeButton">yes</button>
-        <label className="removeButton">{"Remove column?"}</label>
-        </>
-      ) : (
-        <button onClick={() => setRemoveConfirm(true)} className="removeButton">x</button>
-      )}
-    </div>}
+    {!expand ? (
+      <button onClick={() => setExpand(true)} className="editButton">edit</button>
+    ) : (
+      <button className="floatRight editButtons" onClick={() => setExpand(false)}>save</button>
+    )}
     {expand ?
       <input
         type="text"
@@ -170,7 +163,7 @@ const FilterSelect = (props) => {
         <label>Teams</label>
         <Select
           options={teamOptions}
-          defaultValue={defs && teamOptions.filter((t) => defs.teamIds.includes(t.value))}
+          defaultValue={defs && teamOptions.filter((t) => defs.teamIds?.includes(t.value))}
           isMulti
           onChange={(opt) => {
             updateColumn(props.id, {
@@ -183,7 +176,7 @@ const FilterSelect = (props) => {
         <label>Players</label>
         <Select
           options={playerOptions}
-          defaultValue={defs && playerOptions.filter((p) => defs.playerIds.includes(p.value))}
+          defaultValue={defs && playerOptions.filter((p) => defs.playerIds?.includes(p.value))}
           isMulti
           onChange={(opt) => {
             updateColumn(props.id, {
@@ -196,7 +189,7 @@ const FilterSelect = (props) => {
         <label>Beings</label>
         <Select
           options={beingOptions}
-          defaultValue={defs && beingOptions.filter((b) => defs.beings.includes(b.value))}
+          defaultValue={defs && beingOptions.filter((b) => defs.beings?.includes(b.value))}
           isMulti
           onChange={(opt) => {
             updateColumn(props.id, {
@@ -205,11 +198,18 @@ const FilterSelect = (props) => {
             });
           }}
         />
-        <div className="editButtons">
-          <button onClick={() => setExpand(false)}>save</button>
-        </div>
+        {removeConfirm ? (
+          <>
+          <button onClick={() => setRemoveConfirm(false)} className="">no</button>
+          <button onClick={() => removeColumn(props.id)} className="floatRight">yes</button>
+          <label className="">{"Remove column?"}</label>
+          </>
+        ) : (
+          <button onClick={() => setRemoveConfirm(true)} className="">Delete Column</button>
+        )}
       </div>
     )}
+
     </div>
   );
 };

@@ -298,7 +298,7 @@ export const listenFeed = function(cb) {
   });
 };
 
-export const fetchFeed = ({playerIds, teamIds, eventTypes, beings, categories}) => {
+export const fetchFeed = ({playerIds, teamIds, eventTypes, beings, categories, after, limit, before}) => {
   let params = new URLSearchParams();
   if (playerIds && playerIds.length > 0) {
     params.append("playerTags", playerIds.join("_or_"));
@@ -315,7 +315,13 @@ export const fetchFeed = ({playerIds, teamIds, eventTypes, beings, categories}) 
   if (categories && categories.length > 0) {
     params.append("category", categories.join("_or_"));
   }
-  params.append("limit", 100);
+  if (after) {
+    params.append("after", (after / 1000) | 0);
+  }
+  if (before) {
+    params.append("before", (before / 1000) | 0);
+  }
+  params.append("limit", limit || 100);
   return fetch(`https://api.sibr.dev/eventually/v2/events?${params.toString()}`)
     .then(res => res.json());
 };

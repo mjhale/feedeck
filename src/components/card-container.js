@@ -1,11 +1,11 @@
 import { useSelector } from "react-redux";
 import Card from "./card";
-import { addColumn } from "../redux/actions";
-import { v4 as uuidv4 } from "uuid";
-import { useEffect, useState } from "react";
+import { addColumn, setColumns } from "../redux/actions";
+import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import codec from "json-url";
-import { toast } from 'react-toastify';
+import { SettingsColumn } from './settings';
+import { v4 as uuidv4 } from "uuid";
 
 const toTinyColumn = (column) => {
   let tiny = {};
@@ -33,6 +33,7 @@ const toTinyColumn = (column) => {
 const fromTinyColumn = (tiny) => {
   return {
     title: tiny.n || undefined,
+    key: uuidv4(),
     playerIds: tiny.p || [],
     teamIds: tiny.t || [],
     eventTypes: tiny.e || [],
@@ -45,12 +46,16 @@ const CardContainer = (props) => {
   const columns = useSelector((state) => state.columnDefs);
   const history = useHistory();
 
-  const [shareLink, setShareLink] = useState();
   const hash = props.match?.params.hash;
 
   useEffect(() => {
     if (hash) {
-      codec("lzma").decompress(hash).then((json) => json.map((j) => addColumn(fromTinyColumn(j))));
+      codec("lzma").decompress(hash).then((json) => {
+        setColumns(json.map(j => {
+          const t = fromTinyColumn(j);
+          return t;
+        }));
+      });
     } else {
       addColumn({});
     }
@@ -58,58 +63,14 @@ const CardContainer = (props) => {
 
   useEffect(() => {
     codec("lzma").compress(columns.map(toTinyColumn)).then((s) => history.push(`/${s}`));
-    setShareLink(undefined);
   }, [columns]);
-
-  const toastLink = (link) => {
-    navigator.clipboard.writeText(link);
-    toast(`Link copied!\n${link}`, {
-      autoClose: 4000,
-      hideProgressBar: true,
-      pauseOnHover: false,
-      draggable: false,
-    });
-  };
 
   return (
     <div className="cardContainer">
       {columns.map(c => (
         <Card key={c.key} filters={c} id={c.key} />
       ))}
-      <div className="card">
-        <button onClick={() => addColumn({key: uuidv4()})}>Add Column</button>
-        <button onClick={() => {
-          if (shareLink) {
-            toastLink(shareLink);
-            return;
-          }
-          fetch('https://tiny.sibr.dev/submit', {
-            method: 'POST',
-            body: `url=https://feedeck.sibr.dev/#/${hash}`,
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded'
-            }
-          })
-          .then((r) => {
-            if (r.status !== 200) {
-              throw new Error("oh no");
-            }
-            return r.text();
-          })
-          .then((tinyHash) => {
-            const link = `${window.location.origin}/monch#${tinyHash}`;
-            setShareLink(link);
-            toastLink(link);
-          })
-          .catch(() => {
-            setShareLink(undefined);
-            toast("oh no something went wrong", {
-              hideProgressBar: true,
-              draggable: false
-            });
-          })
-        }}>Share</button>
-      </div>
+      <SettingsColumn hash={hash} />
     </div>
   );
 };

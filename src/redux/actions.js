@@ -16,6 +16,13 @@ export const addColumn = function({key, title, playerIds, teamIds, eventTypes, b
   });
 };
 
+export const setColumns = function(columns) {
+  return store.dispatch({
+    type: 'columnDefs/set',
+    payload: columns
+  });
+};
+
 export const removeColumn = function(key) {
   return store.dispatch({
     type: "columnDefs/remove",
@@ -61,4 +68,17 @@ export const setPlayerOptions = function(options) {
     type: "setOptions/players",
     payload: options
   });
-}
+};
+
+export const setLastUpdate = () => {
+  return store.dispatch({
+    type: "lastUpdate/set",
+    payload: Date.now()
+  });
+};
+
+export const toggleAutoRefresh = () => {
+  return store.dispatch({
+    type: 'autoRefresh/toggle',
+  });
+};

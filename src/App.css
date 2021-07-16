@@ -41,6 +41,17 @@
   grid-template-columns: auto auto auto;
   grid-column-gap: .3em;
   align-items: center;
+
+  animation: fadeIn 1s;
+  -webkit-animation: fadeIn 1s;
+  -moz-animation: fadeIn 1s;
+  -o-animation: fadeIn 1s;
+  -ms-animation: fadeIn 1s;
+}
+
+@keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
 }
 
 .entrySeason {
@@ -93,14 +104,10 @@
 }
 
 .editButtons {
-}
-
-.editButtons > button {
-  margin-top: .5em;
   font-size: medium;
 }
 
-.removeButton {
+.floatRight {
   float: right;
 }
 

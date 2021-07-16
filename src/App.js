@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css'
 
-function App() {
+const App = () => {
   useEffect(() => {initChron()}, []);
   return (
     <HashRouter>
