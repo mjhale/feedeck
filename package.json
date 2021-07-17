@@ -16,7 +16,7 @@
     "react-scripts": "^4.0.3",
     "react-select": "^4.3.1",
     "react-toastify": "^7.0.4",
-    "typeface-lora": "^1.1.13",
+    "@fontsource/lora": "^4.5.0",
     "uuid": "^8.3.2",
     "web-vitals": "^1.0.1",
     "yarn": "^1.22.10"

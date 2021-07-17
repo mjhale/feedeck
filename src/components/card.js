@@ -23,6 +23,9 @@ class Entry extends React.PureComponent {
       case -1:
         entryText += " bigdeal";
         break;
+      case 0:
+        entryText += " shelledone";
+        break;
       case 1:
         entryText += " monitor";
         break;
