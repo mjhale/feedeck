@@ -21,7 +21,7 @@ const AdvancedTypeModal = (props) => {
     <div className="typeModalColumns">
       {knownTypes
         .filter((t) => {
-          return !search || t.desc.includes(search);
+          return !search || t.desc.toLowerCase().includes(search.toLowerCase());
         })
         .map((t) => {
         return (
