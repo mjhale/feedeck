@@ -5,6 +5,7 @@ import { addColumn, setColumns, toggleAutoRefresh } from "../redux/actions";
 import { useSelector } from "react-redux";
 import { refreshFeeds } from "../lib/munch";
 import { isDarkMode, toggleDarkMode } from "../lib/darkmode";
+import ballclark from "../ballclark.png";
 
 export const AddColumn = () => (
   <div>
@@ -96,12 +97,27 @@ export const RefreshFeed = () => {
   const lastUpdate = useSelector((state) => state.lastUpdate);
   const columns = useSelector((state) => state.columnDefs);
   const autoRefresh = useSelector((state) => state.autoRefresh);
+  const [ loading, setLoading ] = useState(false);
   return (
     <div>
     {//<button onClick={() => toggleAutoRefresh()}>Autorefresh: {autoRefresh ? "ON" : "OFF"}</button>
     }
-      <button onClick={() => refreshFeeds(lastUpdate, columns)}>Refresh Feed</button>
+      {loading ? (
+        <div className="spinClark">
+          <img src={ballclark}/>
+        </div>
+      ): (
+        <button onClick={() => {
+          setLoading(true);
+          refreshFeeds(lastUpdate, columns)
+          .then(() => {
+            setLoading(false);
+          });
+        }}>Refresh Feed</button>
+      )}
+      <small>
       <div className="defaultText">Last refresh: {(new Date(lastUpdate)).toLocaleString()}</div>
+      </small>
     </div>
   );
 };
@@ -109,6 +125,14 @@ export const RefreshFeed = () => {
 export const DarkToggle = () => {
   const [ isDark, setIsDark ] = useState(isDarkMode());
   return <button onClick={() => setIsDark(toggleDarkMode())}>{isDark ? "🌞" : "🌚"}</button>;
+};
+
+export const Info = () => {
+  return (
+    <small>
+    <a href="https://github.com/jmaliksi/feedeck">github</a>
+    </small>
+  );
 };
 
 export const SettingsColumn = ({ hash }) => {

@@ -141,11 +141,11 @@ const Entries = (props) => {
     {feedEntries && <EntryCluster id={id} feedEntries={feedEntries} />}
     {loadingMore ?
       <LoadingClark /> :
-      <div className="loadMore">
+      !loading && (<div className="loadMore">
         <center>
           <button onClick={loadMore} >Load more</button>
         </center>
-      </div>
+      </div>)
     }
     {/*
     <ul className="feedList">

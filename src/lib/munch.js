@@ -10,7 +10,7 @@ const include = (a1, a2) => {
 };
 
 export const refreshFeeds = (updateFrom, columns) => {
-  fetchFeed({after: updateFrom, limit: 1000})
+  return fetchFeed({after: updateFrom, limit: 1000})
   .then((updates) => {
     setLastUpdate();
     updates.reverse().map(f => {
