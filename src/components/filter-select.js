@@ -8,11 +8,22 @@ import ReactModal from 'react-modal';
 const AdvancedTypeModal = (props) => {
   const { defs, close } = props;
   const [ types, setTypes ] = useState(new Set(defs?.eventTypes || []));
+  const [ search, setSearch ] = useState(undefined);
 
   return (
     <>
+    <input
+      type="text"
+      placeholder="Filter"
+      onChange={(e => {
+        setSearch(e.target.value);
+      })}/>
     <div className="typeModalColumns">
-      {knownTypes.map((t) => {
+      {knownTypes
+        .filter((t) => {
+          return !search || t.desc.includes(search);
+        })
+        .map((t) => {
         return (
           <div key={t.value} className="typeCheckbox">
           <input
