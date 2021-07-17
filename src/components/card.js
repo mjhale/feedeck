@@ -94,6 +94,7 @@ const Entries = (props) => {
   const feedEntries = useSelector((state) => state.feeds[id]);
   const [ loading, setLoading ] = React.useState(false);
   React.useEffect(() => {
+    let cancelled = false;
     setLoading(true);
     fetchFeed({
       playerIds: filters.playerIds,
@@ -103,9 +104,12 @@ const Entries = (props) => {
       categories: filters.categories
     })
     .then(r => {
-      feedsMe(id, r, true);
-      setLoading(false);
+      if (!cancelled) {
+        feedsMe(id, r, true);
+        setLoading(false);
+      }
     });
+    return () => (cancelled = true);
   }, [filters, id]);
   const lastUpdate = useSelector((state) => state.lastUpdate);
 
