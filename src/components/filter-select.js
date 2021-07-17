@@ -169,7 +169,7 @@ const FilterSelect = (props) => {
     {!expand ? (
       <button onClick={() => setExpand(true)} className="editButton">edit</button>
     ) : (
-      <button className="floatRight editButtons" onClick={() => setExpand(false)}>save</button>
+      <button className="floatRight editButtons" onClick={() => setExpand(false)}>Save</button>
     )}
     {expand ?
       <input
@@ -228,8 +228,8 @@ const FilterSelect = (props) => {
             });
           }}
         />
-        <button onClick={() => moveColumn(props.id, -1)}>move left</button>
-        <button onClick={() => moveColumn(props.id, 1)}>move right</button>
+        <button onClick={() => moveColumn(props.id, -1)}>Move Left</button>
+        <button onClick={() => moveColumn(props.id, 1)}>Move Right</button>
         {removeConfirm ? (
           <>
           <button onClick={() => setRemoveConfirm(false)} className="">no</button>
