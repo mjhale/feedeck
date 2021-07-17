@@ -69,7 +69,7 @@ const TypeSelect = (props) => {
       <div className="categorySelect">
         <div className="categoryOption">
           <input
-            id="cat_all"
+            id={`cat_all${colId}`}
             type="checkbox"
             checked={category.size === 0}
             onChange={() => {
@@ -78,13 +78,13 @@ const TypeSelect = (props) => {
               }
             }}
           />
-          <label htmlFor="cat_all">All</label>
+          <label htmlFor={`cat_all${colId}`}>All</label>
         </div>
         {categoryOptions.map((o) => {
           return (
-            <div key={o.value} className="categoryOption">
+            <div key={`${colId}${o.value}`} className="categoryOption">
               <input
-                id={`cat${o.value}`}
+                id={`cat${o.value}${colId}`}
                 type="checkbox"
                 checked={category.has(o.value)}
                 onChange={() => {
@@ -99,7 +99,7 @@ const TypeSelect = (props) => {
                   setCategory(new Set(category));
                 }}
               />
-              <label htmlFor={`cat${o.value}`}>{o.label}</label>
+              <label htmlFor={`cat${o.value}${colId}`}>{o.label}</label>
             </div>
           );
         })}
