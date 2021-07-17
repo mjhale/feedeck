@@ -57,18 +57,13 @@ class Entry extends React.PureComponent {
 const EntryCluster = ({ id, feedEntries }) => {
   const clustered = feedEntries.reduce((acc, f) => {
     let last = acc.pop();
-    if (last.length === 0) {
-      last.push(f);
-      acc.push(last);
-      return acc;
-    }
-    if (last[0].season === f.season && last[0].day === f.day && last[0].phase === f.phase) {
+    if (last.length === 0 || (last[0].season === f.season && last[0].day === f.day && last[0].phase === f.phase)) {
       last.push(f);
       acc.push(last)
       return acc;
     }
     acc.push(last);
-    acc.push([]);
+    acc.push([f]);
     return acc;
   }, [[]]);
 

@@ -3,44 +3,8 @@ import Card from "./card";
 import { addColumn, setColumns } from "../redux/actions";
 import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import codec from "json-url";
 import { SettingsColumn } from './settings';
-import { v4 as uuidv4 } from "uuid";
-
-const toTinyColumn = (column) => {
-  let tiny = {};
-  if (column.title) {
-    tiny.n = column.title;
-  }
-  if (column.playerIds) {
-    tiny.p = column.playerIds;
-  }
-  if (column.teamIds) {
-    tiny.t = column.teamIds;
-  }
-  if (column.eventTypes) {
-    tiny.e = column.eventTypes;
-  }
-  if (column.beings) {
-    tiny.b = column.beings;
-  }
-  if (column.categories) {
-    tiny.c = column.categories;
-  }
-  return tiny;
-};
-
-const fromTinyColumn = (tiny) => {
-  return {
-    title: tiny.n || undefined,
-    key: uuidv4(),
-    playerIds: tiny.p || [],
-    teamIds: tiny.t || [],
-    eventTypes: tiny.e || [],
-    beings: tiny.b || [],
-    categories: tiny.c || []
-  }
-};
+import { compress, decompress } from '../lib/hashurl';
 
 const CardContainer = (props) => {
   const columns = useSelector((state) => state.columnDefs);
@@ -50,11 +14,8 @@ const CardContainer = (props) => {
 
   useEffect(() => {
     if (hash) {
-      codec("lzma").decompress(hash).then((json) => {
-        setColumns(json.map(j => {
-          const t = fromTinyColumn(j);
-          return t;
-        }));
+      decompress(hash).then(cols => {
+        setColumns(cols);
       });
     } else {
       addColumn({});
@@ -62,7 +23,7 @@ const CardContainer = (props) => {
   }, []);
 
   useEffect(() => {
-    codec("lzma").compress(columns.map(toTinyColumn)).then((s) => history.push(`/${s}`));
+    compress(columns).then(s => history.push(`/${s}`));
   }, [columns]);
 
   return (
