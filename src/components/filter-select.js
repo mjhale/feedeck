@@ -11,27 +11,27 @@ const AdvancedTypeModal = (props) => {
 
   return (
     <>
-    <div className="typeModal">
-    {knownTypes.map((t) => {
-      return (
-        <div key={t.value} className="typeCheckbox">
-        <input
-          id={`type${t.value}`}
-          type="checkbox"
-          checked={types.has(t.value)}
-          onChange={() => {
-            if (types.has(t.value)) {
-              types.delete(t.value);
-            } else {
-              types.add(t.value);
-            }
-            setTypes(new Set(types));
-          }}
-        />
-        <label htmlFor={`type${t.value}`}>{`${t.value}: ${t.desc}`}</label>
-        </div>
-      );
-    })}
+    <div className="typeModalColumns">
+      {knownTypes.map((t) => {
+        return (
+          <div key={t.value} className="typeCheckbox">
+          <input
+            id={`type${t.value}`}
+            type="checkbox"
+            checked={types.has(t.value)}
+            onChange={() => {
+              if (types.has(t.value)) {
+                types.delete(t.value);
+              } else {
+                types.add(t.value);
+              }
+              setTypes(new Set(types));
+            }}
+          />
+          <label htmlFor={`type${t.value}`}>{`${t.value}: ${t.desc}`}</label>
+          </div>
+        );
+      })}
     </div>
     <button onClick={() => close(types)}>{"Save & Close"}</button>
     <button onClick={() => setTypes(new Set())}>Clear</button>
@@ -104,7 +104,7 @@ const TypeSelect = (props) => {
         })}
       </div>
       <button onClick={() => setExpandAdvanced(!expandAdvanced)}>{"Advanced >>"}</button>
-      <ReactModal isOpen={expandAdvanced}>
+      <ReactModal isOpen={expandAdvanced} className="typeModal">
         <AdvancedTypeModal defs={defs} close={closeAdvanced} />
       </ReactModal>
       {defs?.eventTypes && <div className="selectedTypes">
@@ -163,7 +163,7 @@ const FilterSelect = (props) => {
       <input
         type="text"
         placeholder={defs?.title || "Title"}
-        onBlur={(e) => updateColumn(props.id, {title: e.target.value})}
+        onBlur={(e) => e.target.value !== defs?.title && updateColumn(props.id, {title: e.target.value})}
         className="titleEdit"
       /> :
       <h1>{defs?.title || "New Column"}</h1>
@@ -174,6 +174,7 @@ const FilterSelect = (props) => {
 
         <label>Teams</label>
         <Select
+          classNamePrefix="editDropdown"
           styles={selectStyle}
           options={teamOptions}
           defaultValue={defs && teamOptions.filter((t) => defs.teamIds?.includes(t.value))}
@@ -188,6 +189,7 @@ const FilterSelect = (props) => {
 
         <label>Players</label>
         <Select
+          classNamePrefix="editDropdown"
           styles={selectStyle}
           options={playerOptions}
           defaultValue={defs && playerOptions.filter((p) => defs.playerIds?.includes(p.value))}
@@ -202,6 +204,7 @@ const FilterSelect = (props) => {
 
         <label>Beings</label>
         <Select
+          classNamePrefix="editDropdown"
           styles={selectStyle}
           options={beingOptions}
           defaultValue={defs && beingOptions.filter((b) => defs.beings?.includes(b.value))}

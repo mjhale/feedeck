@@ -54,7 +54,7 @@ class Entry extends React.PureComponent {
   }
 };
 
-const EntryCluster = ({ feedEntries }) => {
+const EntryCluster = ({ id, feedEntries }) => {
   const clustered = feedEntries.reduce((acc, f) => {
     let last = acc.pop();
     if (last.length === 0) {
@@ -75,10 +75,10 @@ const EntryCluster = ({ feedEntries }) => {
   return (
     <ul className="feedCluster">
       {clustered.map(c => (c.length > 0 &&
-        <li key={c[0].season + c[0].day + c[0].phase} className="feedCluster">
-          <ul className="feedList">
+        <li key={id + c[0].season + c[0].day + c[0].phase} className="feedCluster">
+          <ul className="feedList" key={"ul" + c[0].season + c[0].day + c[0].phase}>
             {c.map(e => (
-              <li key={e.id} className="feedEntry">
+              <li key={"e" + e.id} className="feedEntry">
                 <Entry data={e} />
               </li>
             ))}
@@ -134,7 +134,7 @@ const Entries = (props) => {
   return (
     <>
     {loading && <LoadingClark />}
-    {feedEntries && <EntryCluster feedEntries={feedEntries} />}
+    {feedEntries && <EntryCluster id={id} feedEntries={feedEntries} />}
     {loadingMore ?
       <LoadingClark /> :
       <div className="loadMore">

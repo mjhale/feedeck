@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { addColumn, setColumns, toggleAutoRefresh } from "../redux/actions";
 import { useSelector } from "react-redux";
 import { refreshFeeds } from "../lib/munch";
+import { isDarkMode, toggleDarkMode } from "../lib/darkmode";
 
 export const AddColumn = () => (
   <div>
@@ -100,9 +101,14 @@ export const RefreshFeed = () => {
     {//<button onClick={() => toggleAutoRefresh()}>Autorefresh: {autoRefresh ? "ON" : "OFF"}</button>
     }
       <button onClick={() => refreshFeeds(lastUpdate, columns)}>Refresh Feed</button>
-      <div>Last refresh: {(new Date(lastUpdate)).toLocaleString()}</div>
+      <div className="defaultText">Last refresh: {(new Date(lastUpdate)).toLocaleString()}</div>
     </div>
   );
+};
+
+export const DarkToggle = () => {
+  const [ isDark, setIsDark ] = useState(isDarkMode());
+  return <button onClick={() => setIsDark(toggleDarkMode())}>{isDark ? "🌞" : "🌚"}</button>;
 };
 
 export const SettingsColumn = ({ hash }) => {
@@ -112,6 +118,7 @@ export const SettingsColumn = ({ hash }) => {
       <ShareLink hash={hash} />
       <NewDeck />
       <DuplicateDeck hash={hash} />
+      <DarkToggle />
       <RefreshFeed />
     </div>
   );

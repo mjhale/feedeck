@@ -1,18 +1,46 @@
-:root {
+html[data-theme='light'] {
   --bg-color: #FFF;
-  --primary-color: #000;
-  --secondary-color: #DDD;
-  --tertiary-color: #EEE;
+  --primary-color: hsl(0, 0%, 93%);
+  --secondary-color: hsl(0, 0%, 96%);
   --font-color: #000;
+  --border-color: #000;
+  --highlight-color: lightblue;
 
-  background: var(--bg-color);
+  --lootcrates-color: hsl(0, 0%, 65%);
+
+  --boss-color: hsl(45, 100%, 45%);
+
+  background: lightgray;
   color: var(--font-color);
+}
+
+:root {
+  --bg-color: #000;
+  --primary-color: hsl(0, 0%, 5%);
+  --secondary-color: hsl(0, 0%, 10%);
+  --font-color: #FFF;
+  --border-color: #ddd;
+  --highlight-color: darkblue;
+
+  --lootcrates-color: hsl(0, 0%, 70%);
+
+  --boss-color: hsl(45, 100%, 50%);
+  background: #333;
+  color: var(--font-color);
+}
+
+html.color-theme-in-transition,
+html.color-theme-in-transition *,
+html.color-theme-in-transition *:before,
+html.color-theme-in-transition *:after {
+  transition: all 700ms !important;
+  transition-delay: 0 !important;
 }
 
 .feedEntry {
   list-style-type: none;
   margin: .15em 0;
-  background: var(--tertiary-color);
+  background: var(--secondary-color);
   padding: .3em .2em;
 }
 
@@ -27,16 +55,18 @@
   height: 100vh;
   border-width: 0 1px;
   border-style: solid;
-  border-color: black;
+  border-color: var(--border-color);
   overflow-y: scroll;
   white-space: normal;
   display: inline-block;
+  background: var(--bg-color);
 }
 
 @media (min-width: 30em) {
   .card {
     width: 22em;
     margin: 0 1px 0 1px;
+    padding: .7em;
   }
 }
 
@@ -46,7 +76,7 @@
 button {
   border-radius: 25px;
   cursor: pointer;
-  border: 1px solid var(--primary-color);
+  border: 1px solid var(--font-color);
   font-family: "Open Sans","Helvetica Neue",sans-serif;
   font-weight: 700;
   background: var(--bg-color);
@@ -89,6 +119,7 @@ input[type=checkbox] {
   -moz-animation: fadeIn 1s;
   -o-animation: fadeIn 1s;
   -ms-animation: fadeIn 1s;
+  color: var(--font-color);
 }
 
 @keyframes fadeIn {
@@ -112,7 +143,7 @@ input[type=checkbox] {
 
 .feedList {
   padding: 0;
-  background: var(--secondary-color);
+  background: var(--primary-color);
   margin: .4em 0;
   padding: .1em;
 }
@@ -121,8 +152,18 @@ input[type=checkbox] {
   font-size: small;
 }
 
-.typeModal {
+.typeModalColumns {
   columns: 3 20em;
+}
+
+.typeModal {
+  background: var(--bg-color);
+  position: absolute;
+  inset: 40px;
+  border: 1px solid var(--border-color);
+  overflow: scroll;
+  border-radius: 4px;
+  padding: 20px;
 }
 
 .categorySelect {
@@ -139,8 +180,9 @@ input[type=checkbox] {
   overflow: hidden;
   white-space: nowrap;
   margin: 2px;
-  background: lightblue;
+  background: var(--highlight-color);
   font-style: oblique;
+  border-radius: 5px;
 }
 
 .selectedTypes {
@@ -150,10 +192,13 @@ input[type=checkbox] {
 
 .titleEdit {
   font-size: x-large;
+  background-color: var(--bg-color);
+  border: 1px solid var(--font-color);
+  border-radius: 4px;
+  color: var(--font-color);
 }
 
 .editButtons {
-  font-size: medium;
 }
 
 .floatRight {
@@ -162,6 +207,9 @@ input[type=checkbox] {
 
 .editButton {
   float: right;
+}
+
+.editPanel {
 }
 
 .editPanel > * {
@@ -215,13 +263,13 @@ input[type=checkbox] {
 }
 
 .boss {
-  color: #FFBE00;
+  color: var(--boss-color);
   font-weight: 700;
 }
 
 .lootcrates {
   font-style: italic;
-  color: #b3b3b3;
+  color: var(--lootcrates-color);
   font-weight: 700;
 }
 
@@ -232,4 +280,26 @@ input[type=checkbox] {
 
 .loadMore {
   margin-bottom: 1em;
+}
+
+.defaultText {
+  color: var(--font-color);
+  font-family: "Open sans", helvetica, arial, "sans serif";
+}
+
+.editDropdown__control {
+  cursor: pointer;
+  color: var(--font-color);
+  background-color: var(--bg-color)!important;
+}
+
+.editDropdown__menu {
+  color: var(--font-color);
+  background-color: var(--bg-color)!important;
+  border: 1px solid var(--border-color);
+}
+
+.editDropdown__option:hover, .editDropdown__option--is-focused {
+  cursor: pointer;
+  background-color: var(--highlight-color)!important;
 }
