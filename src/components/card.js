@@ -5,6 +5,16 @@ import { feedsMe } from "../redux/actions";
 import FilterSelect from "./filter-select";
 import ballclark from "../ballclark.png";
 
+const LoadingClark = () => (
+  <div>
+    <center>
+      <div className="spinClark">
+        <img src={ballclark} />
+      </div>
+    </center>
+  </div>
+);
+
 class Entry extends React.PureComponent {
   render() {
     const { season, day, description, metadata } = this.props.data;
@@ -97,19 +107,42 @@ const Entries = (props) => {
       setLoading(false);
     });
   }, [filters, id]);
+  const lastUpdate = useSelector((state) => state.lastUpdate);
+
+  const [ loadingMore, setLoadingMore ] = React.useState(false);
+  const loadMore = () => {
+    setLoadingMore(true);
+    let before = lastUpdate;
+    if (feedEntries?.length > 0) {
+      const last = feedEntries[feedEntries.length - 1];
+      before = Date.parse(last.created);
+    }
+    fetchFeed({
+      playerIds: filters.playerIds,
+      teamIds: filters.teamIds,
+      eventTypes: filters.eventTypes,
+      beings: filters.beings,
+      categories: filters.categories,
+      before: before,
+    })
+    .then(r => {
+      feedsMe(id, r, false, true);
+      setLoadingMore(false);
+    });
+  };
 
   return (
     <>
-    {loading && (
-      <div>
+    {loading && <LoadingClark />}
+    {feedEntries && <EntryCluster feedEntries={feedEntries} />}
+    {loadingMore ?
+      <LoadingClark /> :
+      <div className="loadMore">
         <center>
-          <div className="spinClark">
-            <img src={ballclark}/>
-          </div>
+          <button onClick={loadMore} >Load more</button>
         </center>
       </div>
-    )}
-    {feedEntries && <EntryCluster feedEntries={feedEntries} />}
+    }
     {/*
     <ul className="feedList">
       {feedEntries && feedEntries.map(f => {

@@ -45,13 +45,14 @@ export const updateColumn = function(key, payload) {
   });
 };
 
-export const feedsMe = function(id, entries, reset) {
+export const feedsMe = function(id, entries, reset, prepend) {
   return store.dispatch({
     type: "feeds/append",
     payload: {
       id: id,
       entries: entries,
-      reset: reset
+      reset: reset,
+      prepend: prepend
     }
   });
 };

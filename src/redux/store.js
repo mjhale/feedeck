@@ -73,7 +73,13 @@ function mainReducer(state = initialState, action) {
       if (!action.payload.reset) {
         prev = state.feeds[action.payload.id] || [];
       }
+      let prepend = [];
+      if (action.payload.prepend) {
+        prepend = prev;
+        prev = [];
+      }
       copy.feeds[action.payload.id] = [
+        ...prepend,
         ...action.payload.entries,
         ...prev
       ];
