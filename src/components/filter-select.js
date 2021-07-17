@@ -60,7 +60,8 @@ const TypeSelect = (props) => {
     {label: "Plays", value: 0},
     {label: "Changes", value: 1},
     {label: "Special", value: 2},
-    {label: "Outcomes", value: 3}
+    {label: "Outcomes", value: 3},
+    {label: "Narrative", value: 4}
   ];
 
   return (
