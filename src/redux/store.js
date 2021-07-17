@@ -62,6 +62,21 @@ function mainReducer(state = initialState, action) {
           };
         })
       };
+    case 'columnDefs/move':
+      let i = state.columnDefs.findIndex((e) => e.key === action.payload.id);
+      let swap = i + action.payload.delta;
+      if (swap < 0 || swap >= state.columnDefs.length) {
+        return {...state}
+      }
+      let tmp = state.columnDefs[i];
+      state.columnDefs[i] = state.columnDefs[swap];
+      state.columnDefs[swap] = tmp;
+      return {
+        ...state,
+        columnDefs: [
+          ...state.columnDefs
+        ]
+      }
     case 'feeds/append':
       let copy = {
         ...state,

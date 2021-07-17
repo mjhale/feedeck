@@ -1,5 +1,5 @@
 import Select from "react-select";
-import { updateColumn, removeColumn } from "../redux/actions";
+import { updateColumn, removeColumn, moveColumn } from "../redux/actions";
 import { useState, useEffect } from "react";
 import { useSelector } from 'react-redux';
 import { knownTypes } from "../api/eventuallie";
@@ -217,6 +217,8 @@ const FilterSelect = (props) => {
             });
           }}
         />
+        <button onClick={() => moveColumn(props.id, -1)}>move left</button>
+        <button onClick={() => moveColumn(props.id, 1)}>move right</button>
         {removeConfirm ? (
           <>
           <button onClick={() => setRemoveConfirm(false)} className="">no</button>

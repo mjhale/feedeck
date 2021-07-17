@@ -45,6 +45,16 @@ export const updateColumn = function(key, payload) {
   });
 };
 
+export const moveColumn = function(key, direction) {
+  return store.dispatch({
+    type: 'columnDefs/move',
+    payload: {
+      id: key,
+      delta: direction
+    }
+  });
+}
+
 export const feedsMe = function(id, entries, reset, prepend) {
   return store.dispatch({
     type: "feeds/append",
