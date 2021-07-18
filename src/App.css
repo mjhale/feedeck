@@ -141,6 +141,14 @@ input[type=checkbox] {
   font-family: "Lora";
 }
 
+.plainlist {
+  padding: 0;
+}
+
+.plainlist > li {
+  list-style-type: none;
+}
+
 .feedList {
   padding: 0;
   background: var(--primary-color);
