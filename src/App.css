@@ -251,31 +251,37 @@ input[type=checkbox] {
   }
 }
 
-.monitor {
+.bigdeal { /* being -1 */
+  font-weight: 700;
+  font-style: italic;
+  color: var(--font-color);
+}
+
+.shelledone { /* being 0 */
+  color: red;
+  font-weight: 700;
+}
+
+.monitor { /* being 1 */
   color: #5988FF;
   text-shadow: 0 0 20px;
   font-weight: 700;
 }
 
-.reader {
-  color: #A16DC3;
-  text-shadow: 0 0 10px;
-}
-
-.boss {
+.boss { /* being 2 */
   color: var(--boss-color);
   font-weight: 700;
 }
 
-.lootcrates {
-  font-style: italic;
-  color: var(--lootcrates-color);
+.reader { /* being 3 */
+  color: #A16DC3;
+  text-shadow: 0 0 10px;
   font-weight: 700;
 }
 
-.bigdeal {
-  font-weight: 700;
-  color: var(--font-color);
+.lootcrates { /* being 5 */
+  font-style: italic;
+  color: var(--lootcrates-color);
 }
 
 .loadMore {
