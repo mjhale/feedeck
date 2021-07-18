@@ -17,9 +17,9 @@ const LoadingClark = () => (
 
 class Entry extends React.PureComponent {
   render() {
-    const { season, day, description, metadata } = this.props.data;
+    const { season, day, phase, tournament, description, metadata } = this.props.data;
     let entryText = "entryText";
-    switch (metadata?.being) {
+    switch (parseInt(metadata?.being)) {
       case -1:
         entryText += " bigdeal";
         break;
@@ -41,13 +41,45 @@ class Entry extends React.PureComponent {
       default:
         break;
     }
+    
+    let seasInt = parseInt(season);
+    let seasStr = `s${seasInt + 1}`;
+    let dayStr = `d${parseInt(day) + 1}`;
+    if (seasInt >= -99 && seasInt <= -95) {
+      seasStr = `s${String.fromCharCode(seasInt + 164)}`;
+    } else if (seasInt >= -94 && seasInt <= -69) {
+      seasStr = `sA${String.fromCharCode(seasInt + 159)}`;
+    }
+    switch (parseInt(phase)) {
+      case 0:
+        dayStr = "G";
+        break;
+      case 3:
+        dayStr = "ES";
+        break;
+      case 5:
+        dayStr = "LS";
+        break;
+      case 13:
+        dayStr = "EL";
+        break;
+      case 15:
+      case 16:
+      case 17:
+      case 18:
+        seasStr = parseInt(tournament) === -1 ? "CC" : "T";
+        break;
+      default:
+        break;
+    }
+    
     return (
       <div className="entry">
         <div className="entrySeason">
-          s{parseInt(season) + 1}
+          {seasStr}
         </div>
         <div className="entryDay">
-          d{parseInt(day) + 1}
+          {dayStr}
         </div>
         <div className={entryText}>
           {description}
