@@ -200,6 +200,9 @@ input[type=checkbox] {
 
 .titleEdit {
   font-size: x-large;
+}
+
+input {
   background-color: var(--bg-color);
   border: 1px solid var(--font-color);
   border-radius: 4px;
@@ -301,6 +304,12 @@ input[type=checkbox] {
   font-family: "Open sans", helvetica, arial, "sans serif";
 }
 
+.refreshText {
+  font-size: small;
+  float: right;
+  text-align: right;
+}
+
 .editDropdown__control {
   cursor: pointer;
   color: var(--font-color);
@@ -316,4 +325,18 @@ input[type=checkbox] {
 .editDropdown__option:hover, .editDropdown__option--is-focused {
   cursor: pointer;
   background-color: var(--highlight-color)!important;
+}
+
+.largeText {
+  font-size: large;
+}
+
+.marginZero {
+  margin: 0;
+}
+
+hr {
+  border-width: 1px;
+  border-style: solid;
+  border-color: gray;
 }

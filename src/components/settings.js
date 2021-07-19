@@ -6,10 +6,11 @@ import { useSelector } from "react-redux";
 import { refreshFeeds } from "../lib/munch";
 import { isDarkMode, toggleDarkMode } from "../lib/darkmode";
 import ballclark from "../ballclark.png";
+import DeckLoader from "./deckloader";
 
 export const AddColumn = () => (
   <div>
-  <button onClick={() => addColumn({key: uuidv4()})}>Add Column</button>
+  <button className="largeText" onClick={() => addColumn({key: uuidv4()})}>Add Column</button>
   </div>
 );
 
@@ -31,7 +32,7 @@ export const ShareLink = ({ hash }) => {
   }, [columns]);
 
   return (
-    <div>
+    <div className="">
     <button onClick={() => {
       if (shareLink) {
         toastLink(shareLink);
@@ -63,6 +64,7 @@ export const ShareLink = ({ hash }) => {
         });
       })
     }}>Share</button>
+    {shareLink && <input type="text" value={shareLink} readonly onClick={(e) => e.target.select()}/>}
     </div>
   );
 };
@@ -70,7 +72,7 @@ export const ShareLink = ({ hash }) => {
 export const NewDeck = () => {
   return (
     <div>
-    <button onClick={() => window.open(window.location.origin, '_blank')}>New Feed</button>
+    <button onClick={() => window.open(window.location.origin, '_blank')}>New Deck</button>
     </div>
   );
 };
@@ -87,7 +89,7 @@ export const DuplicateDeck = ({ hash }) => {
   return (
     <div>
     <button onClick={() => window.open(`${window.location.origin}/#/${hash}`, '_blank')}>
-    Duplicate Feed
+    Duplicate Deck
     </button>
     </div>
   );
@@ -107,7 +109,7 @@ export const RefreshFeed = () => {
           <img src={ballclark}/>
         </div>
       ): (
-        <button onClick={() => {
+        <button className="largeText" onClick={() => {
           setLoading(true);
           refreshFeeds(lastUpdate, columns)
           .then(() => {
@@ -115,9 +117,7 @@ export const RefreshFeed = () => {
           });
         }}>Refresh Feed</button>
       )}
-      <small>
-      <div className="defaultText">Last refresh: {(new Date(lastUpdate)).toLocaleString()}</div>
-      </small>
+      <div className="defaultText refreshText">Last refresh<br/> {(new Date(lastUpdate)).toLocaleString()}</div>
     </div>
   );
 };
@@ -139,11 +139,15 @@ export const SettingsColumn = ({ hash }) => {
   return (
     <div className="card">
       <AddColumn />
+      <RefreshFeed />
+      <DarkToggle />
+      <hr />
       <ShareLink hash={hash} />
+      <div>&nbsp;</div>
       <NewDeck />
       <DuplicateDeck hash={hash} />
-      <DarkToggle />
-      <RefreshFeed />
+      <div>&nbsp;</div>
+      <DeckLoader />
     </div>
   );
 };

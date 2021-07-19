@@ -1,20 +1,96 @@
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { useSelector } from "react-redux";
+import { compress, decompress } from "../lib/hashurl";
+import { setColumns } from "../redux/actions";
+
+const saveDeck = (name, columns, setSavedDecks) => {
+  let decks = localStorage.getItem("savedDecks");
+  if (!decks) {
+    decks = "[]";
+  }
+  const parsed = JSON.parse(decks);
+  compress(columns).then(s => {
+    parsed.push({
+      id: uuidv4(),
+      name: name,
+      content: s
+    });
+    setSavedDecks(parsed);
+    localStorage.setItem("savedDecks", JSON.stringify(parsed));
+  });
+};
 
 const DeckLoader = (props) => {
-  const [ savedDecks, setSavedDecks ] = useState({});
+  const [ savedDecks, setSavedDecks ] = useState([]);
+  const [ confirmSave, setConfirmSave ] = useState(false);
+  const [ lastEdited, setLastEdited ] = useState(undefined);
+  const [ saveName, setSaveName ] = useState((new Date()).toLocaleString());
+  const columnDefs = useSelector((state) => state.columnDefs);
+
   useEffect(() => {
+    const lastEdit = localStorage.getItem("lastEditedDeck");
+    if (lastEdit) {
+      setLastEdited(lastEdit);
+    }
     const saved = localStorage.getItem("savedDecks");
     if (saved) {
-      setSavedDecks(saved);
+      setSavedDecks(JSON.parse(saved));
     }
   }, []);
 
-  return (<>
-    <button onClick={() => {
+  useEffect(() => {
+    compress(columnDefs).then((s) => {
+      localStorage.setItem("lastEditedDeck", JSON.stringify({
+        ts: Date.now(),
+        content: s
+      }))
+    });
+  }, [columnDefs])
 
-    }}>Save Deck</button>
-    <button>Load Last Deck</button>
+  return (<>
+    <div>
+      {confirmSave && <input
+        type="text"
+        placeholder="Name"
+        onKeyUp={(e) => {
+          if (e.keyCode === 13) {
+            e.preventDefault();
+            saveDeck(saveName, columnDefs, setSavedDecks);
+            setConfirmSave(false);
+          } else {
+            setSaveName(e.target.value || (new Date()).toLocaleString());
+          }
+        }}/>}
+      <button onClick={() => {
+        if (!confirmSave) {
+          setConfirmSave(true);
+        } else {
+          saveDeck(saveName, columnDefs, setSavedDecks);
+          setConfirmSave(false);
+        }
+      }}>Save{!confirmSave && " Deck"}</button>
+    {/*
+    <button onClick={() => {
+      if (lastEdited) {
+        let parsed = JSON.parse(lastEdited);
+        decompress(parsed.content).then(c => setColumns(c));
+      }
+    }}>Load Last Deck</button>
+    */}
+    <ul className="plainlist marginZero">
+      {
+        savedDecks.map((deck) => (
+          <li key={deck.id}>
+            <button onClick={() => decompress(deck.content).then(c => setColumns(c))}>Load: {deck.name}</button>
+            <button className="floatRight" onClick={() => (
+              setSavedDecks(savedDecks.filter(d => d.id !== deck.id))
+            )}>x</button>
+          </li>
+        ))
+      }
+    </ul>
+    </div>
   </>);
 };
 
