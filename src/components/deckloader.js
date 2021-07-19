@@ -83,9 +83,11 @@ const DeckLoader = (props) => {
         savedDecks.map((deck) => (
           <li key={deck.id}>
             <button onClick={() => decompress(deck.content).then(c => setColumns(c))}>Load: {deck.name}</button>
-            <button className="floatRight" onClick={() => (
-              setSavedDecks(savedDecks.filter(d => d.id !== deck.id))
-            )}>x</button>
+            <button className="floatRight" onClick={() => {
+              const s = savedDecks.filter(d => d.id !== deck.id)
+              setSavedDecks(s)
+              localStorage.setItem("savedDecks", JSON.stringify(s));
+            }}>x</button>
           </li>
         ))
       }

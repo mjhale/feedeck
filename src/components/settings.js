@@ -102,8 +102,6 @@ export const RefreshFeed = () => {
   const [ loading, setLoading ] = useState(false);
   return (
     <div>
-    {//<button onClick={() => toggleAutoRefresh()}>Autorefresh: {autoRefresh ? "ON" : "OFF"}</button>
-    }
       {loading ? (
         <div className="spinClark">
           <img src={ballclark}/>
@@ -118,13 +116,18 @@ export const RefreshFeed = () => {
         }}>Refresh Feed</button>
       )}
       <div className="defaultText refreshText">Last refresh<br/> {(new Date(lastUpdate)).toLocaleString()}</div>
+      {/*
+      <div>
+        <button onClick={() => toggleAutoRefresh()}>&nbsp;Autorefresh: {autoRefresh ? "Enabled" : "Disabled"}&nbsp;</button>
+      </div>
+      */}
     </div>
   );
 };
 
 export const DarkToggle = () => {
   const [ isDark, setIsDark ] = useState(isDarkMode());
-  return <button onClick={() => setIsDark(toggleDarkMode())}>{isDark ? "🌞" : "🌚"}</button>;
+  return <button onClick={() => setIsDark(toggleDarkMode())}>&nbsp;{isDark ? "🌞" : "🌚"}&nbsp;</button>;
 };
 
 export const Info = () => {
