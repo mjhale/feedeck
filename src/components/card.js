@@ -82,7 +82,7 @@ class Entry extends React.PureComponent {
           {dayStr}
         </div>
         <div className={entryText}>
-          <ul class="plainlist">
+          <ul className="plainlist">
             {description.split("\n").map((line) => (<li>{line}</li>))}
           </ul>
         </div>

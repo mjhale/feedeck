@@ -216,6 +216,10 @@ input {
   float: right;
 }
 
+.floatLeft {
+  float: left;
+}
+
 .editButton {
   float: right;
 }

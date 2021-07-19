@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import { toast } from 'react-toastify';
-import { useEffect, useState } from "react";
-import { addColumn, setColumns, toggleAutoRefresh } from "../redux/actions";
+import { useEffect, useState, useRef, useCallback } from "react";
+import { addColumn, setColumns, toggleAutoRefresh, setAutoRefresh } from "../redux/actions";
 import { useSelector } from "react-redux";
 import { refreshFeeds } from "../lib/munch";
 import { isDarkMode, toggleDarkMode } from "../lib/darkmode";
@@ -100,27 +100,50 @@ export const RefreshFeed = () => {
   const columns = useSelector((state) => state.columnDefs);
   const autoRefresh = useSelector((state) => state.autoRefresh);
   const [ loading, setLoading ] = useState(false);
+
+  const intervalRef = useRef();
+  const refresher = () => {
+    setLoading(true);
+    refreshFeeds(lastUpdate, columns).then(() => {
+      setLoading(false);
+    });
+  };
+  useEffect(() => {
+    clearTimeout(intervalRef.current);
+    if (autoRefresh) {
+      intervalRef.current = setTimeout(() => {
+        refresher();
+      }, 20000);
+      return () => {
+        clearTimeout(intervalRef.current);
+      }
+    }
+  }, [autoRefresh, lastUpdate, columns]);
+  const stopAutoRefresh = () => {
+    clearTimeout(intervalRef.current);
+  }
+
   return (
     <div>
+      <div>
       {loading ? (
         <div className="spinClark">
           <img src={ballclark}/>
         </div>
       ): (
-        <button className="largeText" onClick={() => {
-          setLoading(true);
-          refreshFeeds(lastUpdate, columns)
-          .then(() => {
-            setLoading(false);
-          });
-        }}>Refresh Feed</button>
+        <button className="largeText" onClick={refresher}>Refresh Feed</button>
       )}
       <div className="defaultText refreshText">Last refresh<br/> {(new Date(lastUpdate)).toLocaleString()}</div>
-      {/*
-      <div>
-        <button onClick={() => toggleAutoRefresh()}>&nbsp;Autorefresh: {autoRefresh ? "Enabled" : "Disabled"}&nbsp;</button>
       </div>
-      */}
+      <div>
+        <button onClick={() => {
+          if (autoRefresh) {
+            setAutoRefresh(false);
+          } else {
+            setAutoRefresh(true);
+          }
+        }}>&nbsp;Autorefresh: {autoRefresh ? "Enabled" : "Disabled"}&nbsp;</button>
+      </div>
     </div>
   );
 };

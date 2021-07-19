@@ -17,6 +17,11 @@ function mainReducer(state = initialState, action) {
         ...state,
         autoRefresh: !state.autoRefresh
       };
+    case 'autoRefresh/set':
+      return {
+        ...state,
+        autoRefresh: action.payload
+      };
     case 'setOptions/teams':
       return {
         ...state,

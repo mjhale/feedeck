@@ -93,3 +93,10 @@ export const toggleAutoRefresh = () => {
     type: 'autoRefresh/toggle',
   });
 };
+
+export const setAutoRefresh = (ar) => {
+  return store.dispatch({
+    type: 'autoRefresh/set',
+    payload: ar
+  });
+}
