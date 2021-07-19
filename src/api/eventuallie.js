@@ -282,6 +282,7 @@ export const knownTypes = [
   {value: 236, desc: "Item traded"},
   {value: 238, desc: "[Unknown - redacted] (Library)"},
   {value: 241, desc: "Vault revealed"},
+  {value: 251, desc: "Jazz"},
 ];
 
 export const listenFeed = function(cb) {
