@@ -131,7 +131,7 @@ export const RefreshFeed = () => {
           <img src={ballclark}/>
         </div>
       ): (
-        <button className="largeText" onClick={refresher}>Refresh Feed</button>
+        <button className="largeText" onClick={() => refresher()}>Refresh Feed</button>
       )}
       <div className="defaultText refreshText">Last refresh<br/> {(new Date(lastUpdate)).toLocaleString()}</div>
       </div>
