@@ -1,3 +1,6 @@
+import NodeCache from "node-cache";
+const cache = new NodeCache();
+
 const neatPitchEvents = [
   /hits a (Single|Double|Triple|Quadruple|grand slam)/,
   /hits a (solo|2-run|3-run|4-run) home run/,
@@ -116,4 +119,17 @@ export const listenSchedule = function(cb) {
     }
     setTimeout(() => listenSchedule(cb), 2000);
   });
+};
+
+export const getSimulationData = function() {
+  const simData = cache.get("simData");
+  if (simData !== undefined) {
+    return Promise.resolve(simData);
+  }
+  return fetch("https://cors-proxy.blaseball-reference.com/database/simulationData")
+    .then(res => res.json())
+    .then(js => {
+      cache.set("simData", js, 1300);
+      return js;
+    });
 };

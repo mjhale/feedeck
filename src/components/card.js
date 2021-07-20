@@ -5,6 +5,7 @@ import { feedsMe } from "../redux/actions";
 import FilterSelect from "./filter-select";
 import ballclark from "../ballclark.png";
 import ReactTooltip from "react-tooltip";
+import { getSimulationData } from "../api/blaseball";
 
 const LoadingClark = () => (
   <div>
@@ -92,7 +93,7 @@ class Entry extends React.PureComponent {
   }
 };
 
-const EntryCluster = ({ id, feedEntries }) => {
+const EntryCluster = ({ id, feedEntries, season }) => {
   const clustered = feedEntries.reduce((acc, f) => {
     let last = acc.pop();
     if (last.length === 0 || (last[0].season === f.season && last[0].day === f.day && last[0].phase === f.phase)) {
@@ -108,7 +109,9 @@ const EntryCluster = ({ id, feedEntries }) => {
   return (
     <ul className="feedCluster">
       {clustered.map(c => (c.length > 0 &&
-        <li key={id + c[0].season + c[0].day + c[0].phase} className="feedCluster">
+        <li
+            key={id + c[0].season + c[0].day + c[0].phase}
+            className={`feedCluster${season !== undefined && c[0].season !== season ? " faded" : ""}`}>
           <ul className="feedList" key={"ul" + c[0].season + c[0].day + c[0].phase}>
             {c.map(e => (
               <li key={"e" + e.id} className="feedEntry">
@@ -142,6 +145,17 @@ const Entries = (props) => {
   const { filters, id } = props;
   const feedEntries = useSelector((state) => state.feeds[id]);
   const [ loading, setLoading ] = React.useState(false);
+
+  const showCurrentSeason = useSelector((state) => state.showCurrentSeason);
+  const [ season, setSeason ] = React.useState();
+  React.useEffect(() => {
+    if (showCurrentSeason) {
+      getSimulationData().then(s => setSeason(s?.season));
+    } else {
+      setSeason(undefined);
+    }
+  }, [showCurrentSeason]);
+
   React.useEffect(() => {
     let cancelled = false;
     setLoading(true);
@@ -187,7 +201,7 @@ const Entries = (props) => {
   return (
     <>
     {loading && <LoadingClark />}
-    {feedEntries && <EntryCluster id={id} feedEntries={feedEntries} />}
+    {feedEntries && <EntryCluster id={id} feedEntries={feedEntries} season={season}/>}
     {loadingMore ?
       <LoadingClark /> :
       !loading && (<div className="loadMore">

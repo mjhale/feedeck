@@ -7,7 +7,8 @@ const initialState = {
   autoRefresh: false,
   feeds: {},
   teamOptions: [],
-  playerOptions: []
+  playerOptions: [],
+  showCurrentSeason: false
 };
 
 function mainReducer(state = initialState, action) {
@@ -16,6 +17,11 @@ function mainReducer(state = initialState, action) {
       return {
         ...state,
         autoRefresh: !state.autoRefresh
+      };
+    case 'showCurrentSeason/set':
+      return {
+        ...state,
+        showCurrentSeason: action.payload
       };
     case 'autoRefresh/set':
       return {

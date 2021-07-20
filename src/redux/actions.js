@@ -95,6 +95,13 @@ export const toggleAutoRefresh = () => {
   });
 };
 
+export const setShowCurrentSeason = (payload) => {
+  return store.dispatch({
+    type: 'showCurrentSeason/set',
+    payload: payload
+  });
+};
+
 export const setAutoRefresh = (ar) => {
   return store.dispatch({
     type: 'autoRefresh/set',

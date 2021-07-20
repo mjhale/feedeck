@@ -350,3 +350,17 @@ hr {
   border-style: solid;
   border-color: gray;
 }
+
+.faded {
+  opacity: .2;
+  animation: fadedOut .3s;
+  -webkit-animation: fadedOut .3s;
+  -moz-animation: fadedOut .3s;
+  -o-animation: fadedOut .3s;
+  -ms-animation: fadedOut .3s;
+}
+
+@keyframes fadedOut {
+  0% {opacity:1;}
+  100% {opacity:.2;}
+}

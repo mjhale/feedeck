@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import { toast } from 'react-toastify';
 import { useEffect, useState, useRef, useCallback } from "react";
-import { addColumn, setColumns, toggleAutoRefresh, setAutoRefresh } from "../redux/actions";
+import { addColumn, setColumns, toggleAutoRefresh, setAutoRefresh, setShowCurrentSeason } from "../redux/actions";
 import { useSelector } from "react-redux";
 import { refreshFeeds } from "../lib/munch";
 import { isDarkMode, toggleDarkMode } from "../lib/darkmode";
@@ -161,11 +161,19 @@ export const Info = () => {
   );
 };
 
+export const ShowCurrentSeason = () => {
+  const showCurrentSeason = useSelector((state) => state.showCurrentSeason);
+  return (<div>
+    <button onClick={() => setShowCurrentSeason(!showCurrentSeason)}>Filter current season: {showCurrentSeason ? "Enabled" : "Disabled"}</button>
+  </div>);
+};
+
 export const SettingsColumn = ({ hash }) => {
   return (
     <div className="card">
       <AddColumn />
       <RefreshFeed />
+      <ShowCurrentSeason />
       <DarkToggle />
       <hr />
       <ShareLink hash={hash} />

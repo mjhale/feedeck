@@ -9,7 +9,7 @@ const include = (a1, a2) => {
   return a1?.length === 0 || intersect(a1, a2).length > 0;
 };
 
-export const refreshFeeds = (updateFrom, columns, limit) => {
+export const refreshFeeds = (updateFrom, columns, limit, season) => {
   return fetchFeed({after: updateFrom, limit: 1000})
   .then((updates) => {
     setLastUpdate();
