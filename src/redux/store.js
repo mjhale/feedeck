@@ -103,6 +103,9 @@ function mainReducer(state = initialState, action) {
         ...action.payload.entries,
         ...prev
       ];
+      if (action.payload.limit) {
+        copy.feeds[action.payload.id] = copy.feeds[action.payload.id].slice(0, action.payload.limit);
+      }
       return copy;
     case 'lastUpdate/set':
       return {

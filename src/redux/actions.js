@@ -55,14 +55,15 @@ export const moveColumn = function(key, direction) {
   });
 }
 
-export const feedsMe = function(id, entries, reset, prepend) {
+export const feedsMe = function(id, entries, reset, prepend, limit) {
   return store.dispatch({
     type: "feeds/append",
     payload: {
       id: id,
       entries: entries,
       reset: reset,
-      prepend: prepend
+      prepend: prepend,
+      limit: limit
     }
   });
 };

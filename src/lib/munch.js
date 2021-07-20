@@ -9,7 +9,7 @@ const include = (a1, a2) => {
   return a1?.length === 0 || intersect(a1, a2).length > 0;
 };
 
-export const refreshFeeds = (updateFrom, columns) => {
+export const refreshFeeds = (updateFrom, columns, limit) => {
   return fetchFeed({after: updateFrom, limit: 1000})
   .then((updates) => {
     setLastUpdate();
@@ -20,7 +20,7 @@ export const refreshFeeds = (updateFrom, columns) => {
             include(c.beings, f.metadata ? [f.metadata.being] : []) &&
             include(c.categories, [f.category]) &&
             include(c.eventTypes, [f.type])) {
-          feedsMe(c.key, [f]);
+          feedsMe(c.key, [f], false, false, limit);
         }
       });
     });

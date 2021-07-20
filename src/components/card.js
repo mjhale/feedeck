@@ -4,6 +4,7 @@ import { fetchFeed } from "../api/eventuallie";
 import { feedsMe } from "../redux/actions";
 import FilterSelect from "./filter-select";
 import ballclark from "../ballclark.png";
+import ReactTooltip from "react-tooltip";
 
 const LoadingClark = () => (
   <div>
@@ -121,6 +122,22 @@ const EntryCluster = ({ id, feedEntries }) => {
   );
 };
 
+const LoadMore = ({loadMore}) => {
+  const autoRefresh = useSelector((state) => state.autoRefresh);
+
+  if (autoRefresh) {
+    return (<>
+      <button data-tip data-for="cantLoad" class="disabled">Load More</button>
+      <ReactTooltip id="cantLoad" place="top" type="dark" effect="solid" className="tooltip" clickable>
+        Auto-Refresh enabled
+      </ReactTooltip>
+      </>
+    );
+  } else {
+    return <button onClick={loadMore}>Load More</button>;
+  }
+};
+
 const Entries = (props) => {
   const { filters, id } = props;
   const feedEntries = useSelector((state) => state.feeds[id]);
@@ -175,21 +192,10 @@ const Entries = (props) => {
       <LoadingClark /> :
       !loading && (<div className="loadMore">
         <center>
-          <button onClick={loadMore} >Load more</button>
+          <LoadMore loadMore={loadMore}/>
         </center>
       </div>)
     }
-    {/*
-    <ul className="feedList">
-      {feedEntries && feedEntries.map(f => {
-        return (
-          <li key={f.id} className="feedEntry">
-            <Entry data={f} />
-          </li>
-        );
-      })}
-    </ul>
-    */}
     </>
   );
 };

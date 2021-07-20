@@ -102,9 +102,9 @@ export const RefreshFeed = () => {
   const [ loading, setLoading ] = useState(false);
 
   const intervalRef = useRef();
-  const refresher = () => {
+  const refresher = (limit) => {
     setLoading(true);
-    refreshFeeds(lastUpdate, columns).then(() => {
+    refreshFeeds(lastUpdate, columns, limit).then(() => {
       setLoading(false);
     });
   };
@@ -112,7 +112,7 @@ export const RefreshFeed = () => {
     clearTimeout(intervalRef.current);
     if (autoRefresh) {
       intervalRef.current = setTimeout(() => {
-        refresher();
+        refresher(50);
       }, 20000);
       return () => {
         clearTimeout(intervalRef.current);

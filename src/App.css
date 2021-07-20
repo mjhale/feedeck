@@ -91,6 +91,12 @@ button:hover {
   background: var(--font-color);
 }
 
+button.disabled {
+  background: var(--bg-color);
+  color: gray;
+  cursor: not-allowed;
+}
+
 input[type=checkbox] {
   cursor: pointer;
 }
