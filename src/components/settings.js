@@ -164,7 +164,7 @@ export const Info = () => {
 export const ShowCurrentSeason = () => {
   const showCurrentSeason = useSelector((state) => state.showCurrentSeason);
   return (<div>
-    <button onClick={() => setShowCurrentSeason(!showCurrentSeason)}>Filter current season: {showCurrentSeason ? "Enabled" : "Disabled"}</button>
+    <button onClick={() => setShowCurrentSeason(!showCurrentSeason)}>&nbsp;Filter current season: {showCurrentSeason ? "Enabled" : "Disabled"}</button>
   </div>);
 };
 
