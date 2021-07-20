@@ -43,8 +43,11 @@ function mainReducer(state = initialState, action) {
         columnDefs: [...state.columnDefs, action.payload]
       };
     case 'columnDefs/remove':
+      let feeds = {...state.feeds};
+      delete feeds[action.payload];
       return {
         ...state,
+        feeds: feeds,
         columnDefs: state.columnDefs.filter((entry) => {
           return entry.key !== action.payload;
         })
