@@ -116,7 +116,7 @@ input[type=checkbox] {
 
 .entry {
   display: inline-grid;
-  grid-template-columns: auto auto auto;
+  grid-template-columns: 1.1em 1.3em auto;
   grid-column-gap: .3em;
   align-items: center;
 
@@ -126,6 +126,8 @@ input[type=checkbox] {
   -o-animation: fadeIn 1s;
   -ms-animation: fadeIn 1s;
   color: var(--font-color);
+  width: 100%;
+
 }
 
 @keyframes fadeIn {
@@ -363,4 +365,44 @@ hr {
 @keyframes fadedOut {
   0% {opacity:1;}
   100% {opacity:.2;}
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+@keyframes metadataIn {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(-100%);
+  }
+  50% {
+    -webkit-transform: translateY(0%);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0%);
+  }
+}
+
+.metadataCard {
+  padding-left: .7em;
+  padding-top: .3em;
+  align-items: bottom;
+  animation: metadataIn .5s;
+  -webkit-animation: metadataIn .5s;
+  -moz-animation: metadataIn .5s;
+  -o-animation: metadataIn .5s;
+  -ms-animation: metadataIn .5s;
+}
+
+.metadataEmoji {
+  font-size: x-small;
+  margin-right: 1em;
 }

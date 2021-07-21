@@ -8,7 +8,8 @@ const initialState = {
   feeds: {},
   teamOptions: [],
   playerOptions: [],
-  showCurrentSeason: false
+  showCurrentSeason: false,
+  showMetadata: true
 };
 
 function mainReducer(state = initialState, action) {
@@ -120,6 +121,11 @@ function mainReducer(state = initialState, action) {
       return {
         ...state,
         lastUpdate: action.payload
+      };
+    case 'metadata/toggle':
+      return {
+        ...state,
+        showMetadata: !state.showMetadata
       };
     default:
       return state;

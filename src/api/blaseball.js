@@ -41,6 +41,8 @@ const neatChangeEvents = [
   /Echoed/
 ];
 
+const BASE_URL = "https://api.sibr.dev/corsmechanics/www.blaseball.com/"
+
 function isPitching(update) {
   for (const pattern of neatPitchEvents) {
     if (pattern.test(update)) {
@@ -103,33 +105,41 @@ export const scheduleToFeed = function(schedule) {
   }).filter(f => f !== undefined);
 };
 
-export const listenSchedule = function(cb) {
-  let stream = new EventSource(`https://cors-proxy.blaseball-reference.com/events/streamData`);
-  stream.addEventListener("message", (event) => {
-    const sched = JSON.parse(event.data).value?.games?.schedule;
-    if (sched) {
-      cb(sched);
-    }
+const cachedFetch = function(url, ttl) {
+  const cached = cache.get(url);
+  if (cached !== undefined) {
+    return Promise.resolve(cached);
+  }
+  const promised = cache.get(`promised${url}`);
+  if (promised !== undefined) {
+    return promised;
+  }
+  const p = fetch(url).then(res => res.json()).then(js => {
+    cache.set(url, js, ttl);
+    return js;
   });
-
-  stream.addEventListener("error", () => {
-    console.log("oops");
-    if (stream !== undefined) {
-      stream.close();
-    }
-    setTimeout(() => listenSchedule(cb), 2000);
-  });
+  cache.set(`promised${url}`, p, 5);
+  return p;
 };
 
 export const getSimulationData = function() {
-  const simData = cache.get("simData");
-  if (simData !== undefined) {
-    return Promise.resolve(simData);
-  }
-  return fetch("https://cors-proxy.blaseball-reference.com/database/simulationData")
-    .then(res => res.json())
-    .then(js => {
-      cache.set("simData", js, 1300);
-      return js;
-    });
+  return cachedFetch(`${BASE_URL}database/simulationData`, 1800);
 };
+
+export const getMod = function(id) {
+  if (!id) {
+    return Promise.resolve([]);
+  }
+  return cachedFetch(`${BASE_URL}database/mods?ids=${id}`, 6000);
+};
+
+export const getItem = function(id) {
+  if (!id) {
+    return Promise.resolve([]);
+  }
+  return cachedFetch(`${BASE_URL}database/items?ids=${id}`, 300);
+};
+
+export const getTeam = function(id) {
+  return cachedFetch(`${BASE_URL}database/team?id=${id}`, 300);
+}

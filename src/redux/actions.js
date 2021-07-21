@@ -108,3 +108,9 @@ export const setAutoRefresh = (ar) => {
     payload: ar
   });
 }
+
+export const toggleExpandMetadata = () => {
+  return store.dispatch({
+    type: 'metadata/toggle'
+  });
+};

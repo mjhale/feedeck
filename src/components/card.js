@@ -5,7 +5,8 @@ import { feedsMe } from "../redux/actions";
 import FilterSelect from "./filter-select";
 import ballclark from "../ballclark.png";
 import ReactTooltip from "react-tooltip";
-import { getSimulationData } from "../api/blaseball";
+import { getSimulationData, getMod } from "../api/blaseball";
+import EntryMetadata from "./card-metadata";
 
 const LoadingClark = () => (
   <div>
@@ -87,6 +88,7 @@ class Entry extends React.PureComponent {
           <ul className="plainlist">
             {description.split("\n").map((line) => (<li>{line}</li>))}
           </ul>
+          <EntryMetadata data={this.props.data} />
         </div>
       </div>
     );
