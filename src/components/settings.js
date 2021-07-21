@@ -171,7 +171,7 @@ export const ShowCurrentSeason = () => {
 export const ToggleMetadata = () => {
   const showMetadata = useSelector((state) => state.showMetadata);
   return (<div>
-    <button onClick={toggleExpandMetadata}>&nbsp;Expand Metadata</button>
+    <button onClick={toggleExpandMetadata}>&nbsp;{showMetadata ? "Hide" : "Expand"} Metadata</button>
   </div>);
 };
 
