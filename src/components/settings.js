@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import { useEffect, useState, useRef, useCallback } from "react";
 import { addColumn, setColumns, toggleAutoRefresh, setAutoRefresh, setShowCurrentSeason, toggleExpandMetadata } from "../redux/actions";
 import { useSelector } from "react-redux";
-import { refreshFeeds } from "../lib/munch";
+import { refreshFeeds, refreshFeeds2 } from "../lib/munch";
 import { isDarkMode, toggleDarkMode } from "../lib/darkmode";
 import ballclark from "../ballclark.png";
 import DeckLoader from "./deckloader";
@@ -98,15 +98,16 @@ export const DuplicateDeck = ({ hash }) => {
 export const RefreshFeed = () => {
   const lastUpdate = useSelector((state) => state.lastUpdate);
   const columns = useSelector((state) => state.columnDefs);
+  const feeds = useSelector((state) => state.feeds);
   const autoRefresh = useSelector((state) => state.autoRefresh);
   const [ loading, setLoading ] = useState(false);
 
   const intervalRef = useRef();
   const refresher = (limit) => {
     setLoading(true);
-    refreshFeeds(lastUpdate, columns, limit).then(() => {
+    refreshFeeds2(columns, feeds, limit, lastUpdate).then(() => {
       setLoading(false);
-    });
+    })
   };
   useEffect(() => {
     clearTimeout(intervalRef.current);

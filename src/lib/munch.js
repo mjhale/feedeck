@@ -26,3 +26,23 @@ export const refreshFeeds = (updateFrom, columns, limit, season) => {
     });
   });
 };
+
+export const refreshFeeds2 = (columns, feeds, limit, updateFrom) => {
+  return Promise.all(columns.map(c => {
+    const last = feeds[c.key][0]?.created;
+    const from = last ? Date.parse(last) : updateFrom;
+    return fetchFeed({
+        playerIds: c.playerIds,
+        teamIds: c.teamIds,
+        eventTypes: c.eventTypes,
+        beings: c.beings,
+        categories: c.categories,
+        after: from,
+        limit: 1000
+      })
+      .then(r => {
+        feedsMe(c.key, r, false, false, limit)
+        setLastUpdate();
+      });
+  }));
+};
