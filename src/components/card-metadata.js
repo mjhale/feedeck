@@ -93,10 +93,13 @@ const TeamEmoji = ({teamId}) => {
 
 const AddPlayer = ({ metadata, sign }) => {
   const pos = getPosition(metadata.location);
-  return (<div>
-    <TeamEmoji teamId={metadata.teamId}/>{metadata.teamName}<br/>
-    {sign} {metadata.playerName}{pos && `, ${pos}`}
-  </div>);
+  return <div className="grid-2">
+    <div><TeamEmoji teamId={metadata.teamId}/>{metadata.teamName}</div>
+    <div>
+      <div>{sign} {metadata.playerName}</div>
+      {pos && <div>{pos}</div>}
+    </div>
+  </div>
 };
 
 const ShadowSwapNecro = ({ metadata }) => {
