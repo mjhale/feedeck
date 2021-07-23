@@ -5,14 +5,14 @@ import { feedsMe } from "../redux/actions";
 import FilterSelect from "./filter-select";
 import ballclark from "../ballclark.png";
 import ReactTooltip from "react-tooltip";
-import { getSimulationData, getMod } from "../api/blaseball";
+import { getSimulationData } from "../api/blaseball";
 import EntryMetadata from "./card-metadata";
 
 const LoadingClark = () => (
   <div>
     <center>
       <div className="spinClark">
-        <img src={ballclark} />
+        <img alt="loading" src={ballclark} />
       </div>
     </center>
   </div>
@@ -86,7 +86,7 @@ class Entry extends React.PureComponent {
         </div>
         <div className={entryText}>
           <ul className="plainlist">
-            {description.split("\n").map((line) => (<li>{line}</li>))}
+            {description.split("\n").map((line) => (<li key={line}>{line}</li>))}
           </ul>
           <EntryMetadata data={this.props.data} />
         </div>
@@ -132,7 +132,7 @@ const LoadMore = ({loadMore}) => {
 
   if (autoRefresh) {
     return (<>
-      <button data-tip data-for="cantLoad" class="disabled">Load More</button>
+      <button data-tip data-for="cantLoad" className="disabled">Load More</button>
       <ReactTooltip id="cantLoad" place="top" type="dark" effect="solid" className="tooltip" clickable>
         Auto-Refresh enabled
       </ReactTooltip>

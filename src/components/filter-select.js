@@ -169,7 +169,7 @@ const FilterSelect = (props) => {
     {!expand ? (
       <button onClick={() => setExpand(true)} className="editButton">edit</button>
     ) : (
-      <button className="floatRight editButtons" onClick={() => setExpand(false)}>Save</button>
+      <button className="floatRight editButtons" onClick={() => setExpand(false)}>ok</button>
     )}
     {expand ?
       <input

@@ -1,9 +1,9 @@
 import { v4 as uuidv4 } from "uuid";
 import { toast } from 'react-toastify';
-import { useEffect, useState, useRef, useCallback } from "react";
-import { addColumn, setColumns, toggleAutoRefresh, setAutoRefresh, setShowCurrentSeason, toggleExpandMetadata } from "../redux/actions";
+import { useEffect, useState, useRef } from "react";
+import { addColumn, setColumns, setAutoRefresh, setShowCurrentSeason, toggleExpandMetadata } from "../redux/actions";
 import { useSelector } from "react-redux";
-import { refreshFeeds, refreshFeeds2 } from "../lib/munch";
+import { refreshFeeds2 } from "../lib/munch";
 import { isDarkMode, toggleDarkMode } from "../lib/darkmode";
 import ballclark from "../ballclark.png";
 import DeckLoader from "./deckloader";
@@ -120,16 +120,13 @@ export const RefreshFeed = () => {
       }
     }
   }, [autoRefresh, lastUpdate, columns]);
-  const stopAutoRefresh = () => {
-    clearTimeout(intervalRef.current);
-  }
 
   return (
     <div>
       <div>
       {loading ? (
         <div className="spinClark">
-          <img src={ballclark}/>
+          <img alt="loading" src={ballclark}/>
         </div>
       ): (
         <button className="largeText" onClick={() => refresher()}>Refresh Feed</button>

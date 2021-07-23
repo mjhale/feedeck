@@ -1,11 +1,11 @@
 import { useSelector } from "react-redux";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { getMod, getTeam } from "../api/blaseball";
 
 const Minus = () => <span style={{color: "#F00"}}>-</span>;
 const Plus = () => <span style={{color: "#0C0"}}>+</span>;
 const Star = ({color}) => <svg stroke={color} fill={color} stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M9.362 9.158l-5.268.584c-.19.023-.358.15-.421.343s0 .394.14.521c1.566 1.429 3.919 3.569 3.919 3.569-.002 0-.646 3.113-1.074 5.19-.036.188.032.387.196.506.163.119.373.121.538.028 1.844-1.048 4.606-2.624 4.606-2.624l4.604 2.625c.168.092.378.09.541-.029.164-.119.232-.318.195-.505l-1.071-5.191 3.919-3.566c.14-.131.202-.332.14-.524s-.23-.319-.42-.341c-2.108-.236-5.269-.586-5.269-.586l-2.183-4.83c-.082-.173-.254-.294-.456-.294s-.375.122-.453.294l-2.183 4.83z"></path></svg>;
-const Arrow = () => <svg fill="#888" stroke-width="0" viewBox="0 0 16 16" class="Events-List-Row-Group" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.146 4.646a.5.5 0 01.708 0l3 3a.5.5 0 010 .708l-3 3a.5.5 0 01-.708-.708L12.793 8l-2.647-2.646a.5.5 0 010-.708z" clip-rule="evenodd"></path><path fill-rule="evenodd" d="M2 8a.5.5 0 01.5-.5H13a.5.5 0 010 1H2.5A.5.5 0 012 8z" clip-rule="evenodd"></path></svg>;
+const Arrow = () => <svg fill="#888" stroke-width="0" viewBox="0 0 16 16" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.146 4.646a.5.5 0 01.708 0l3 3a.5.5 0 010 .708l-3 3a.5.5 0 01-.708-.708L12.793 8l-2.647-2.646a.5.5 0 010-.708z" clip-rule="evenodd"></path><path fill-rule="evenodd" d="M2 8a.5.5 0 01.5-.5H13a.5.5 0 010 1H2.5A.5.5 0 012 8z" clip-rule="evenodd"></path></svg>;
 
 const getPosition = (p) => ["🏏 Lineup", "⚾️ Rotation", "🕶 Shadows", "🕶 Shadow"][p];
 
@@ -34,7 +34,7 @@ const AddedMod = ({ sign, metadata }) => {
   useEffect(() => getMod(metadata.mod).then(m => {
     setColor(m[0].textColor);
     setText(m[0].title);
-  }), []);
+  }), [metadata.mod]);
 
   return <div>{sign} <span style={{color: color}}>{text}</span></div>;
 };
@@ -43,7 +43,7 @@ const TimedModExpiry = ({ metadata }) => {
   const [ mods, setMods ] = useState([]);
   useEffect(() => {
     getMod(metadata.mods).then(m => setMods(m));
-  }, []);
+  }, [metadata.mods]);
 
   return (<ul className="plainlist">
     {mods.map(m => (<li style={{color: m.textColor}}><Minus/> {m.title}</li>))}
@@ -58,7 +58,7 @@ const ReplaceMod = ({ metadata }) => {
       setFrom(m[0]);
       setTo(m[1]);
     });
-  }, [])
+  }, [metadata.from, metadata.to])
   return (<div>
     <span style={{color: from.textColor}}>{from.title}</span>
     &nbsp;<Arrow/>&nbsp;
@@ -74,7 +74,7 @@ const MultiMod = ({ metadata }) => {
     const a = metadata.adds?.map(m => m.mod);
     getMod(r).then(res => setRemoves(res));
     getMod(a).then(res => setAdds(res));
-  }, [])
+  }, [metadata.adds, metadata.removes])
   return (<div>
     <ul className="plainlist">
       {removes.map(m => (<li style={{color: m.textColor}}><Minus/> {m.title}</li>))}
@@ -87,7 +87,7 @@ const MultiMod = ({ metadata }) => {
 
 const TeamEmoji = ({teamId}) => {
   const [ em, setEm ] = useState();
-  useEffect(() => getTeamEmoji(teamId).then(e => setEm(e)), []);
+  useEffect(() => getTeamEmoji(teamId).then(e => setEm(e)), [teamId]);
   return <span className="metadataEmoji">{em}</span>;
 };
 

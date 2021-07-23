@@ -24,29 +24,15 @@ const saveDeck = (name, columns, setSavedDecks) => {
 const DeckLoader = (props) => {
   const [ savedDecks, setSavedDecks ] = useState([]);
   const [ confirmSave, setConfirmSave ] = useState(false);
-  const [ lastEdited, setLastEdited ] = useState(undefined);
   const [ saveName, setSaveName ] = useState((new Date()).toLocaleString());
   const columnDefs = useSelector((state) => state.columnDefs);
 
   useEffect(() => {
-    const lastEdit = localStorage.getItem("lastEditedDeck");
-    if (lastEdit) {
-      setLastEdited(lastEdit);
-    }
     const saved = localStorage.getItem("savedDecks");
     if (saved) {
       setSavedDecks(JSON.parse(saved));
     }
   }, []);
-
-  useEffect(() => {
-    compress(columnDefs).then((s) => {
-      localStorage.setItem("lastEditedDeck", JSON.stringify({
-        ts: Date.now(),
-        content: s
-      }))
-    });
-  }, [columnDefs])
 
   return (<>
     <div>
@@ -70,14 +56,6 @@ const DeckLoader = (props) => {
           setConfirmSave(false);
         }
       }}>Save{!confirmSave && " Deck"}</button>
-    {/*
-    <button onClick={() => {
-      if (lastEdited) {
-        let parsed = JSON.parse(lastEdited);
-        decompress(parsed.content).then(c => setColumns(c));
-      }
-    }}>Load Last Deck</button>
-    */}
     <ul className="plainlist marginZero">
       {
         savedDecks.map((deck) => (

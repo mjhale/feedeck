@@ -14,14 +14,15 @@ export const refreshFeeds = (updateFrom, columns, limit, season) => {
   .then((updates) => {
     setLastUpdate();
     updates.reverse().map(f => {
-      columns.map(c => {
+      return columns.map(c => {
         if (include(c.playerIds, f.playerTags) &&
             include(c.teamIds, f.teamTags) &&
             include(c.beings, f.metadata ? [f.metadata.being] : []) &&
             include(c.categories, [f.category]) &&
             include(c.eventTypes, [f.type])) {
-          feedsMe(c.key, [f], false, false, limit);
+          return feedsMe(c.key, [f], false, false, limit);
         }
+        return undefined;
       });
     });
   });
@@ -29,7 +30,11 @@ export const refreshFeeds = (updateFrom, columns, limit, season) => {
 
 export const refreshFeeds2 = (columns, feeds, limit, updateFrom) => {
   return Promise.all(columns.map(c => {
-    const last = feeds[c.key][0]?.created;
+    const feed = feeds[c.key];
+    if (!feed) {
+      return Promise.resolve(undefined);
+    }
+    const last = feed[0]?.created;
     const from = last ? Date.parse(last) : updateFrom;
     return fetchFeed({
         playerIds: c.playerIds,
