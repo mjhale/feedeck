@@ -5,7 +5,7 @@ import { getMod, getTeam } from "../api/blaseball";
 const Minus = () => <span style={{color: "#F00"}}>-</span>;
 const Plus = () => <span style={{color: "#0C0"}}>+</span>;
 const Star = ({color}) => <svg stroke={color} fill={color} stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M9.362 9.158l-5.268.584c-.19.023-.358.15-.421.343s0 .394.14.521c1.566 1.429 3.919 3.569 3.919 3.569-.002 0-.646 3.113-1.074 5.19-.036.188.032.387.196.506.163.119.373.121.538.028 1.844-1.048 4.606-2.624 4.606-2.624l4.604 2.625c.168.092.378.09.541-.029.164-.119.232-.318.195-.505l-1.071-5.191 3.919-3.566c.14-.131.202-.332.14-.524s-.23-.319-.42-.341c-2.108-.236-5.269-.586-5.269-.586l-2.183-4.83c-.082-.173-.254-.294-.456-.294s-.375.122-.453.294l-2.183 4.83z"></path></svg>;
-const Arrow = () => <svg fill="#888" stroke-width="0" viewBox="0 0 16 16" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.146 4.646a.5.5 0 01.708 0l3 3a.5.5 0 010 .708l-3 3a.5.5 0 01-.708-.708L12.793 8l-2.647-2.646a.5.5 0 010-.708z" clip-rule="evenodd"></path><path fill-rule="evenodd" d="M2 8a.5.5 0 01.5-.5H13a.5.5 0 010 1H2.5A.5.5 0 012 8z" clip-rule="evenodd"></path></svg>;
+const Arrow = () => <svg fill="#888" stroke-width="0" viewBox="0 0 14 12" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.146 4.646a.5.5 0 01.708 0l3 3a.5.5 0 010 .708l-3 3a.5.5 0 01-.708-.708L12.793 8l-2.647-2.646a.5.5 0 010-.708z" clip-rule="evenodd"></path><path fill-rule="evenodd" d="M2 8a.5.5 0 01.5-.5H13a.5.5 0 010 1H2.5A.5.5 0 012 8z" clip-rule="evenodd"></path></svg>;
 
 const getPosition = (p) => ["🏏 Lineup", "⚾️ Rotation", "🕶 Shadows", "🕶 Shadow"][p];
 
@@ -175,15 +175,52 @@ const IncineratePlayer = ({metadata}) => {
 };
 
 const IncreaseRating = ({metadata, color}) => {
-  let mult = metadata.type === 4 ? 1 : 5;
-  // this is inconsistent
-  //const label = ["Hitting", "Defense", "Pitching", "Baserunning", "Overall"][metadata.type];
-  return <div>{roundNum(mult * metadata.before)} <Arrow/> <StarNumber n={mult * metadata.after} color={color}/></div>;
-}
+  const mult = 5;
+  const label = ["Hitting", "Pitching", "Defense", "Baserunning", "Combined", "Overall"][metadata.type];
+  return <div className="grid-2">
+    <div>{label}</div>
+    <div>{roundNum(mult * metadata.before)} <Arrow/> <StarNumber n={mult * metadata.after} color={color}/></div>
+  </div>
+};
+
+const IncreaseAttr = ({metadata, color}) => {
+  const label = [
+    'Tragicness',
+    'Buoyancy',
+    'Thwackability',
+    'Moxie',
+    'Divinity',
+    'Musclitude',
+    'Patheticism',
+    'Martyrdom',
+    'Cinnamon',
+    'BaseThirst',
+    'Laserlikeness',
+    'Continuation',
+    'Indulgence',
+    'GroundFriction',
+    'Shakespearianism',
+    'Suppression',
+    'Unthwackability',
+    'Coldness',
+    'Overpowerment',
+    'Ruthlessness',
+    'Pressurization',
+    'Omniscience',
+    'Tenaciousness',
+    'Watchfulness',
+    'Anticapitalism',
+    'Chasiness'
+  ][metadata.type];
+  return <div className="grid-2">
+    <div>{label}</div>
+    <div>{roundNum(metadata.before)} <Arrow/> <StarNumber n={metadata.after} color={color}/></div>
+  </div>
+};
 
 const Score = ({metadata}) => {
   return (
-    <div className="grid-3">
+    <div className="grid-2">
       <div>{emoji(metadata.awayEmoji)} {metadata.awayScore}</div>
       <div>{emoji(metadata.homeEmoji)} {metadata.homeScore}</div>
     </div>);
@@ -230,12 +267,14 @@ const EntryMetadata = (props) => {
     case 116:
       return <IncineratePlayer metadata={metadata} />
     case 117:
-    case 179:
       return <IncreaseRating metadata={metadata} color="#0C0" />
     case 118:
-    case 180:
     case 122:
       return <IncreaseRating metadata={metadata} color="#F00" />
+    case 179:
+      return <IncreaseAttr metadata={metadata} color="#0C0" />
+    case 180:
+      return <IncreaseAttr metadata={metadata} color="#F00" />
     case 119:
       return <IncreaseRating metadata={metadata} color={metadata.after > metadata.before ? "#0C0" : "#F00"} />
     case 144:
