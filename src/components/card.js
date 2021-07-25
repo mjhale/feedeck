@@ -41,6 +41,9 @@ class Entry extends React.PureComponent {
       case 5:
         entryText += " lootcrates";
         break;
+      case 6:
+        entryText += " namerifeht";
+        break;
       default:
         break;
     }

@@ -145,6 +145,7 @@ const FilterSelect = (props) => {
     {label: "Coin", value: 2},
     {label: "Reader", value: 3},
     {label: "Lōotcrates", value: 5},
+    {label: "Namerifeht", value: 6},
   ];
 
   const checkTitle = (opt) => {

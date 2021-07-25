@@ -314,6 +314,11 @@ input {
   color: var(--lootcrates-color);
 }
 
+.namerifeht { /* being 6 */
+  color: #ea5b23;
+  font-weight: 700;
+}
+
 .loadMore {
   margin-bottom: 1em;
 }
