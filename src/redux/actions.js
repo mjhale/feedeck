@@ -1,7 +1,7 @@
 import store from "./store";
 import { v4 as uuidv4 } from "uuid";
 
-export const addColumn = function({key, title, playerIds, teamIds, eventTypes, beings, categories}) {
+export const addColumn = function({key, title, playerIds, teamIds, eventTypes, beings, categories, unredacted}) {
   return store.dispatch({
     type: "columnDefs/add",
     payload: {
@@ -11,7 +11,8 @@ export const addColumn = function({key, title, playerIds, teamIds, eventTypes, b
       teamIds: teamIds || [],
       eventTypes: eventTypes || [],
       beings: beings || [],
-      categories: categories || []
+      categories: categories || [],
+      unredacted: false
     }
   });
 };
@@ -40,7 +41,8 @@ export const updateColumn = function(key, payload) {
       teamIds: payload.teamIds,
       eventTypes: payload.eventTypes,
       beings: payload.beings,
-      categories: payload.categories
+      categories: payload.categories,
+      unredacted: payload.unredacted
     }
   });
 };

@@ -302,7 +302,14 @@ export const listenFeed = function(cb) {
   });
 };
 
-export const fetchFeed = ({playerIds, teamIds, eventTypes, beings, categories, after, limit, before}) => {
+export const fetchFeed = ({playerIds, teamIds, eventTypes, beings, categories, after, limit, before, unredacted}) => {
+  if (unredacted) {
+    return fetch(`https://api.sibr.dev/upnuts/upstream`)
+      .then(res => res.json())
+      .then(events => events.filter((e) => e.type === 'THRESHOLD_PASSED_SCALES'))
+      .then(events => events.map((e) => e.event))
+  }
+
   let params = new URLSearchParams();
   if (playerIds && playerIds.length > 0) {
     params.append("playerTags", playerIds.join("_or_"));

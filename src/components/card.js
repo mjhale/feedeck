@@ -162,6 +162,7 @@ const Entries = (props) => {
     let cancelled = false;
     setLoading(true);
     fetchFeed({
+      unredacted: filters.unredacted,
       playerIds: filters.playerIds,
       teamIds: filters.teamIds,
       eventTypes: filters.eventTypes,
@@ -187,6 +188,7 @@ const Entries = (props) => {
       before = Date.parse(last.created);
     }
     fetchFeed({
+      unredacted: filters.unredacted,
       playerIds: filters.playerIds,
       teamIds: filters.teamIds,
       eventTypes: filters.eventTypes,

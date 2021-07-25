@@ -103,6 +103,7 @@ function mainReducer(state = initialState, action) {
       if (!action.payload.reset) {
         prev = state.feeds[action.payload.id] || [];
       }
+      let existingIds = new Set(prev.map(e => e.id));
       let prepend = [];
       if (action.payload.prepend) {
         prepend = prev;
@@ -110,7 +111,7 @@ function mainReducer(state = initialState, action) {
       }
       copy.feeds[action.payload.id] = [
         ...prepend,
-        ...action.payload.entries,
+        ...action.payload.entries.filter(e => !existingIds.has(e.id)),
         ...prev
       ];
       if (action.payload.limit !== undefined) {

@@ -12,6 +12,7 @@ const AdvancedTypeModal = (props) => {
 
   return (
     <>
+    <h2 style={{margin: 0}}>Blaseball Events</h2>
     <input
       type="text"
       placeholder="Filter"

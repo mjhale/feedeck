@@ -37,16 +37,18 @@ export const refreshFeeds2 = (columns, feeds, limit, updateFrom) => {
     const last = feed[0]?.created;
     const from = last ? Date.parse(last) : updateFrom;
     return fetchFeed({
+        unredacted: c.unredacted,
         playerIds: c.playerIds,
         teamIds: c.teamIds,
         eventTypes: c.eventTypes,
         beings: c.beings,
         categories: c.categories,
         after: from,
-        limit: 1000
+        limit: limit || 100
       })
       .then(r => {
-        feedsMe(c.key, r, false, false, limit)
+        const reset = c.unredacted ? true : false;
+        feedsMe(c.key, r, reset, false, limit)
         setLastUpdate();
       });
   }));

@@ -3,6 +3,10 @@ import { v4 as uuidv4 } from "uuid";
 
 const toTinyColumn = (column) => {
   let tiny = {};
+  if (column.unredacted) {
+    tiny.u = column.unredacted;
+    return tiny;
+  }
   if (column.title) {
     tiny.n = column.title;
   }
@@ -32,7 +36,8 @@ const fromTinyColumn = (tiny) => {
     teamIds: tiny.t || [],
     eventTypes: tiny.e || [],
     beings: tiny.b || [],
-    categories: tiny.c || []
+    categories: tiny.c || [],
+    unredacted: tiny.u || false
   }
 };
 

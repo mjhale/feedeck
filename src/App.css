@@ -71,7 +71,7 @@ html {
 
 @media (min-width: 30em) {
   .card {
-    width: 22em;
+    width: 23em;
     margin: 0 1px 0 1px;
     padding: .7em;
   }
@@ -123,7 +123,7 @@ input[type=checkbox] {
 
 .entry {
   display: inline-grid;
-  grid-template-columns: 1.1em 1.3em auto;
+  grid-template-columns: 1.1em 1.6em auto;
   grid-column-gap: .3em;
   align-items: center;
 
