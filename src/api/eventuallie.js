@@ -282,6 +282,8 @@ export const knownTypes = [
   {value: 236, desc: "Item traded"},
   {value: 238, desc: "[Unknown - redacted] (Library)"},
   {value: 241, desc: "Vault revealed"},
+  {value: 246, desc: "Game cancelled"},
+  {value: 247, desc: "Sun(Sun) Supernova"},
   {value: 251, desc: "Jazz"},
 ];
 
