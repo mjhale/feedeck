@@ -68,4 +68,5 @@ const ilbTeamIds = [
     "d9f89a8a-c563-493e-9d64-78e4f9a55d4a",
     "eb67ae5e-c4bf-46ca-bbbc-425cd34182ff",
     "f02aeae2-5e6a-4098-9842-02d2273f25c7",
+    "b47df036-3aa4-4b98-8e9e-fe1d3ff1894b", // The Oxford Paws
 ];
