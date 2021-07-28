@@ -284,7 +284,9 @@ export const knownTypes = [
   {value: 241, desc: "Vault revealed"},
   {value: 246, desc: "Game cancelled"},
   {value: 247, desc: "Sun(Sun) Supernova"},
+  {value: 249, desc: "Black Hole (Black Hole)"},
   {value: 251, desc: "Jazz"},
+  {value: 256, desc: "From diagonal, glood"},
 ];
 
 export const listenFeed = function(cb) {
