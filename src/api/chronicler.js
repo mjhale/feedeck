@@ -36,7 +36,7 @@ export const initChron = () => {
         res.data
         .filter((d) => ilbTeamIds.indexOf(d.id) !== -1)
         .map((d) => (
-          {value: d.id, label: d.data.fullName}
+          {value: d.id, label: d.data.state?.scattered?.fullName || d.data.fullName}
         ))
       );
     });
@@ -68,5 +68,21 @@ const ilbTeamIds = [
     "d9f89a8a-c563-493e-9d64-78e4f9a55d4a",
     "eb67ae5e-c4bf-46ca-bbbc-425cd34182ff",
     "f02aeae2-5e6a-4098-9842-02d2273f25c7",
-    "b47df036-3aa4-4b98-8e9e-fe1d3ff1894b", // The Oxford Paws
+    "b47df036-3aa4-4b98-8e9e-fe1d3ff1894b", // Oxford Paws
+    "2e22beba-8e36-42ba-a8bf-975683c52b5f", // Carolina Queens
+    "88151292-6c12-4fb8-b2d6-3e64821293b3", // Alaskan Immortals
+    "54d0d0f2-16e0-42a0-9fff-79cfa7c4a157", // Antarctic Fireballs
+    "9494152b-99f6-4adb-9573-f9e084bc813f", // Baltimore Crabs
+    "d6a352fc-b675-40a0-864d-f4fd50aaeea0", // Canada Artists
+    "55c9fee3-79c8-4467-8dfb-ff1e340aae8c", // Dallas Cows
+    "4c192065-65d8-4010-8145-395f82d24ddf", // Green Hill Hedgehogs
+    "258f6389-aac1-43d2-b30a-4b4dde90d5eb", // Kola Boar
+    "b6b5df8f-5602-4883-b47d-07e77ed9d5af", // Laredo Excavators
+    "1e04e5cc-80a6-41c0-af0d-7292817eed79", // Louisville Lobsters
+    "d0762a7e-004b-48a9-a832-a993982b305b", // Mallorca Whales
+    "3a094991-4cbc-4786-b74c-688876d243f4", // Maryland Squirrels
+    "c19bb50b-9a22-4dd2-8200-bce639b1b239", // Minneapolis Truckers
+    "cbd44c06-231a-4d1a-bb7d-4170b06e566a", // Oklahoma Heartthrobs
+    "1a51664e-efec-45fa-b0ba-06d04c344628", // Oregon Psychics
+    "4cd14d96-f817-41a3-af6c-2d3ed0dd20b7", // San Diego Saltines
 ];
