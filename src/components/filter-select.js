@@ -144,6 +144,7 @@ const FilterSelect = (props) => {
     {label: "Monitor", value: 1},
     {label: "Coin", value: 2},
     {label: "Reader", value: 3},
+    {label: "Microphone", value: 4},
     {label: "Lōotcrates", value: 5},
     {label: "Namerifeht", value: 6},
   ];

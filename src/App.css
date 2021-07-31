@@ -319,6 +319,10 @@ input {
   font-weight: 700;
 }
 
+.microphone {
+  font-family: "Open sans", "Helvetica neue", sans-serif;
+}
+
 .loadMore {
   margin-bottom: 1em;
 }
